@@ -1,0 +1,672 @@
+@import "mixins";
+@import "variables";
+
+.wrapper {
+  overflow: unset;
+}
+
+.planid__icone-wrapper, .button-fechar {
+  display: none !important;
+}
+
+.planids-homologar, .planids-consolidar {
+  font-size: 0.8rem;
+  padding-bottom: 5rem;
+
+  .form-steps,
+  .btn-acao,
+  .janela .header,
+  .marca-ccs,
+  .cabecalho-print,
+  .fa-paper-plane-o,
+  .planid-em-avaliacao,
+  .fa-info,
+  .wrapper-alerta-nao-preenchidos,
+  .wrapper-comentarios {
+    display: none;
+  }
+
+  nav {
+    background-color: #ffffff;
+    font-family: "Roboto Condensed", sans-serif;
+    color: #2c3430;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 20px -3px #0000002e;
+
+    ul {
+      display: flex;
+      flex-flow: row wrap;
+    }
+
+    li {
+      cursor: pointer;
+      padding: 1rem;
+      width: 100%;
+      transition: background-color 0.3s, color 0.3s;
+
+      &:hover,
+      &.selected {
+        background-color: $cinzaQuente;
+        color: #ccc;
+      }
+
+      &.selected {
+        pointer-events: none;
+      }
+    }
+  }
+
+  main {
+    margin: 0 auto;
+    min-height: 80vh;
+    max-width: 800px;
+    width: 95%;
+    flex-grow: 1;
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 2rem 0;
+    }
+  }
+
+  .planids-gestao {
+    &__opcoes-iniciais {
+      font-family: $fonteTitulo;
+      font-size: 1.2rem;
+      display: flex;
+      flex-flow: row wrap;
+      width: 90%;
+      max-width: 600px;
+      margin: 55px auto;
+      justify-content: space-between;
+      cursor: pointer;
+
+      span {
+        padding: 1rem;
+        transition: background-color 0.3s, transform 0.3s;
+        width: 290px;
+        text-align: center;
+        border-radius: 2px;
+        background-color: $turquesa;
+        color: #fff;
+
+        &:hover {
+          background-color: $turquesaEscuro;
+          transform: scale(1.025);
+        }
+      }
+    }
+
+    &__modulos-opcao {
+      font-size: 1rem;
+      position: relative;
+
+      .numero-novas-mensagens {
+        width: 1rem;
+        height: 1rem;
+        font-size: .8rem;
+        background-color: $vermelho;
+        color: #fff;
+        margin-left: 10px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 5px;
+        right: 0;
+        pointer-events: none;
+      }
+    }
+
+    &__opcoes-iniciais span {
+      margin: 5px auto;
+    }
+  }
+
+  .form-selecao-semestre {
+    justify-content: center;
+    align-items: flex-end;
+    margin: 0 auto 60px;
+
+    input[type="number"] {
+      border-radius: 3px;
+      max-width: 80px;
+    }
+
+    div {
+      padding: unset;
+
+      input {
+        margin: 0;
+      }
+
+      &:not(:last-of-type) {
+        max-width: 100px;
+        text-align: center;
+      }
+
+      &:last-of-type {
+        justify-content: center;
+        max-width: 100%;
+        margin-top: 20px;
+        margin-bottom: unset;
+
+        input[type="submit"] {
+          width: 70%;
+          padding: 0 15px;
+          border-radius: 3px;
+        }
+      }
+    }
+
+    @media (min-width: 500px) {
+      div {
+        &:last-of-type {
+          justify-content: flex-end;
+          max-width: 188px;
+          margin-top: unset;
+
+          input[type="submit"] {
+            width: unset;
+          }
+        }
+      }
+    }
+  }
+
+  .box-cinza {
+    pointer-events: none;
+  }
+
+  .grupos-usuarios {
+    margin: 0 auto 30px auto;
+
+    span {
+      pointer-events: none;
+    }
+
+    @media (min-width: $phabletsLow) {
+      margin: 0 auto 60px auto;
+    }
+
+    ul {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-between;
+
+      li {
+        padding: 10px;
+        font-family: $fonteTitulo;
+        font-size: 1.2rem;
+        background-color: $turquesa;
+        color: #fff;
+        flex-grow: 1;
+        min-width: 250px;
+        margin: 3px;
+        text-align: center;
+        border: 5px solid $turquesa;
+        transition: border 0.25s, background-color 0.25s;
+
+        &.selected {
+          border: 5px solid darken($turquesa, 10%);
+          background-color: darken($turquesa, 5%);
+        }
+
+        &:hover:not(.selected) {
+          cursor: pointer;
+          border: 5px solid darken($turquesa, 5%);
+          background-color: darken($turquesa, 5%);
+        }
+
+        @media (min-width: $phabletsLow) {
+          padding: 20px;
+        }
+      }
+    }
+  }
+
+  &__lista-docentes {
+    max-height: 400px;
+    max-width: 700px;
+    margin: 0 auto;
+    overflow-y: auto;
+    margin-bottom: 4rem;
+
+    li {
+      padding: 1rem;
+      display: flex;
+      position: relative;
+      justify-content: space-between;
+      align-items: center;
+      font-family: $fonteTitulo;
+
+      &:nth-child(odd) {
+        background-color: $menuN3;
+      }
+
+      &:nth-child(even) {
+        background-color: $menuN2;
+      }
+
+      .lista-docentes-nome {
+        flex-grow: 1;
+      }
+
+      .lista-docentes-horas-totais {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-left: 15px;
+
+        svg {
+          stroke: $cinzaQuente !important;
+        }        
+      }
+      
+      .lista-docentes-ch {
+        font-size: .8rem !important;
+        color: $cinzaQuente;
+      }
+
+      .lista-docentes-icones {
+        margin-left: 10px;
+      }
+    }
+
+    i {
+      color: $cinzaQuente;
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:not(:last-of-type) {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .janela {
+    max-width: 1000px;
+    border-bottom: none;
+    border-radius: 5px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+
+    label,
+    p {
+      font-family: $fonteTitulo !important;
+    }
+  }
+
+  .cabecalho-planid {
+    background-color: $cinzaQuente;
+    box-shadow: $boxShadow;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 100px;
+    height: 80px;
+    font-size: 0.7rem;
+
+    & > div {
+      display: flex;
+      align-items: center;
+    }
+    h2 {
+      display: inline;
+      margin: 0;
+      padding: 10px;
+      color: #fff;
+    }
+  }
+
+  .marca-ccs {
+    height: 80px;
+    margin-top: -20px;
+  }
+
+  .fechar-planid {
+    font-size: 2.5rem;
+    position: absolute;
+    right: 15px;
+    top: 0;
+    z-index: 3;
+    color: #ccc;
+    cursor: pointer;
+  }
+
+  .formulario > section > div:last-of-type {
+    display: unset;
+    text-align: unset;
+  }
+
+  .section-planid > h2 {
+    background-color: $turquesa;
+    padding: 25px;
+    border-radius: 4px;
+    color: #fff;
+    margin-top: 2rem;
+    font-size: 1rem;
+    text-align: left;
+  }
+
+  .subsection-container > label {
+    text-align: center;
+    margin: 1rem 0;
+    p {
+      display: block;
+      width: 100%;
+      font-size: 1.4rem;
+    }
+  }
+
+  .box-cinza {
+    padding: 15px;
+    box-shadow: unset;
+    background-color: #fafafa;
+    margin: 20px 5px;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 7px;
+    max-height: 600px;
+    transition: max-height 0.5s ease-in, opacity 0.5s ease-in;
+
+    &.sem-atividades {
+      text-align: center;
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+
+  .horas-semanais,
+  .horas-semanais-parcial {
+    position: absolute;
+    font-family: $fonteTitulo;
+    color: #fff !important;
+
+    svg {
+      height: 21px;
+      stroke: #fff !important;
+    }
+
+    .horas-parciais-legenda {
+      position: absolute;
+      font-size: .7rem;
+      width: 65px;
+      top: 35px;
+      left: -15px;
+    }
+
+    .quantidade-horas {
+      font-size: 0.9rem;
+      position: relative;
+    }
+  }
+
+  .horas-semanais {
+    right: 55px;
+    width: unset;
+    top: 10px;
+    z-index: 3;
+    position: fixed;
+    display: flex;
+    text-align: unset !important;
+
+    .quantidade-horas {
+      top: 6px;
+      left: -9px;
+    }
+
+    .horas-totais-legenda {
+      position: absolute;
+      font-size: 0.7rem;
+      width: 62px;
+      margin-top: 25px;
+      pointer-events: none;
+    }
+
+    &.fora-da-faixa {
+      color: $vermelho;
+      svg {
+        stroke: $vermelho;
+      }
+    }
+  }
+
+  .horas-semanais-parcial {
+    width: unset;
+    right: 15px;
+    top: 56px;
+    color: #fff;
+
+    svg {
+      stroke: #fff;
+    }
+    .quantidade-horas {
+      top: 3px;
+      left: -12px;
+    }
+  }
+
+  .field {
+    margin-bottom: 15px;
+  }
+
+  .btn-acoes-planid-div {
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin: 0 auto 50px auto;
+  }
+
+  .enviar-mensagem-docente {
+    max-height: 0;
+    transition: max-height 0.3s;
+    overflow: hidden;
+
+    &.aberto {
+      max-height: 600px;
+    }
+  }  
+
+  // ESTATÍSTICAS
+  .estatisticas-main-button-div {
+    justify-content: center;
+    flex-flow: row wrap;
+
+    button {
+      margin: 15px;
+      width: 250px;
+    }
+  }
+
+  .estatisticas-dinamicas {
+    &__div {
+      display: flex;
+      margin-top: 60px;
+
+      ul {
+        max-width: 300px;      
+      }
+  
+      li {
+        min-width: 150px;
+        margin: 15px 0;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: $turquesa;
+        cursor: pointer;
+        font-family: $fonteTitulo;
+        text-transform: uppercase;
+        font-size: .9rem;
+
+        &:hover {
+          background-color: $turquesaEscuro;
+        }
+      }
+    }
+
+
+    &__main {
+      flex-grow: 1;
+    }
+
+  }
+  
+  .csv-estatisticas-planid {
+    &__div {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      max-width: 450px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+
+    &__link {
+      padding: 10px 20px;
+      background-color: lighten($cinzaQuente, 10%);
+      width: unset;
+      margin: 10px 20px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color .3s;
+      font-family: $fonteTitulo;
+
+      a {
+        color: #eee;
+        pointer-events: none;
+      }
+
+      .fa-bar-chart-o {
+        margin-right: 10px;
+        pointer-event: none;
+      }
+
+      &:hover {
+        background-color: $cinzaQuente;
+      }
+    }    
+  }
+
+  .div-mensagens-recebidas {
+    max-width: 400px;
+    width: 90%;
+    display: flex;
+    flex-flow: row wrap;
+    position: relative;
+    margin: 2rem 0;    
+    border: 2px solid $cinzaQuente;
+    border-radius: 3px;
+
+    span {
+      order: -1;
+      width: 100%;
+      background-color: $cinzaQuente;
+      color: #ccc;
+      padding: 1rem;
+    }
+
+    ul {
+      position: relative;
+      width: 100%;
+      
+      li {
+        padding: .5rem 0 .5rem 1rem;
+        display: inline-block;
+        width: 100%;
+        cursor: pointer;
+        transition: padding-left .3s;
+
+        &:hover {
+          padding-left: 2rem;
+        }
+      }
+
+      li:nth-of-type(even) {
+        background-color: #eaeaea;
+      }
+    }
+  }
+
+  @media (min-width: $phabletsLow) {
+    font-size: unset;
+
+    nav {
+      position: sticky;
+      top: 0;
+      li {
+        width: unset;
+      }
+    }
+
+    .cabecalho-planid {
+      font-size: 0.8rem;
+    }
+
+    .marca-ccs {
+      display: unset;
+      height: 50px;
+    }
+
+    .subsection-container > label {
+      margin: 2rem 0 1rem 0;
+    }
+
+    .section-planid > h2 {
+      font-size: 1.4rem;
+      text-align: center;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    nav {
+      text-align: left;
+    }
+
+    .janela {
+      top: 2.5vh;
+      max-height: 95vh;
+      left: calc(50% - 500px);
+    }
+
+    .marca-ccs {
+      height: 80px;
+    }
+
+    .cabecalho-planid {
+      font-size: unset;
+      padding-right: 130px;
+    }
+
+    .horas-semanais {
+      position: fixed;
+      left: calc((100vw + 780px) / 2);
+      right: unset;
+      top: 43px;
+
+      svg {
+        stroke: #fff;
+      }
+
+      .quantidade-horas {
+        color: #fff;
+      }
+    }
+  }
+
+  @media (min-width: 1366px) {
+    main {
+      max-width: 1000px;
+    }
+  }
+}

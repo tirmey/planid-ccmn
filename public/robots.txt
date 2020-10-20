@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://www.ccs.ufrj.br/sitemap.xml

@@ -1,0 +1,36 @@
+<main class="planid-consulta deslocar">
+    <h1>Consulta aos planos de atividades dos docentes do CCS (PLANID CCS)</h1>
+    <div class='planid-consulta-div'>
+      <div class='planid-consulta-filtros'>
+        <form class='planid-consulta-filtros__form'>
+          <div>
+            <label for='semestre'>Semestre</label>
+            <select id='semestre' class='selecao-semestre' name='semestre'></select>
+          </div>
+          <div>
+            <label for='unidade'>Unidade</label>
+            <select class='selecao-unidade' name='unidade'> </select>
+          </div>
+          <div>
+            <input type='submit' value='filtrar planids'>  
+          </div>
+        </form>
+        <div class='planid-consulta-filtros__input-busca'></div>
+
+      </div>
+      <div class='planid-consulta-docentes'></div>
+    </div>
+</main>
+
+{{!-- SCRIPTS --}}
+
+<script src="https://use.fontawesome.com/60e0586006.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" defer></script>
+<script src="/dist/scripts/utilidadesSistemas.min.js" defer></script>
+<script src="/dist/scripts/planidConsultaPublica.min.js" defer></script>
+
+{{!-- ESTILOS --}}
+<link rel="stylesheet" href="/dist/styles/planidConsulta.min.css">
+<link rel="stylesheet" href="/dist/styles/styles.min.css">
