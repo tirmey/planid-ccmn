@@ -7,17 +7,7 @@ services:
     ports:
       - '80:3000'
     external_links:
-      - mongo
-    environment: 
-      - MONGODB_URI=mongodb://localhost:27017/planid-teste
-      - USERMAIL=user@email.com
-      - USERPASS=userPass
-      - CHAVE_EXPRESS_SESSION=anyString
-      - ENCRYPT_SECRET=anyString
-      - NODE_ENV=development
-      - VIRTUAL_HOST=planid.ccmn.selfip.org
-      - LETSENCRYPT_HOST=planid.ccmn.selfip.org
-      - VIRTUAL_PORT=3000
+      - mongo    
   mongo:
     container_name: mongo
     image: mongo
