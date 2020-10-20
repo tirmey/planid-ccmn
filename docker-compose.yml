@@ -9,13 +9,12 @@ services:
     external_links:
       - mongo
     environment: 
-      - PATH_TO_DOCS=${PATH_TO_DOCS}
-      - MONGODB_URI=${MONGODB_URI}
-      - USERMAIL=${USERMAIL}
-      - USERPASS=${USERPASS}
-      - CHAVE_EXPRESS_SESSION=${CHAVE_EXPRESS_SESSION}
-      - ENCRYPT_SECRET=${ENCRYPT_SECRET}
-      - NODE_ENV=${NODE_ENV}
+      - MONGODB_URI=mongodb://localhost:27017/planid-teste
+      - USERMAIL=user@email.com
+      - USERPASS=userPass
+      - CHAVE_EXPRESS_SESSION=anyString
+      - ENCRYPT_SECRET=anyString
+      - NODE_ENV=development
       - VIRTUAL_HOST=planid.ccmn.selfip.org
       - LETSENCRYPT_HOST=planid.ccmn.selfip.org
       - VIRTUAL_PORT=3000
