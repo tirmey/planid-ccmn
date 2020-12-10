@@ -1,0 +1,29 @@
+{{> header}}
+{{> topBarDesktop}}
+<main class="login-container deslocar">
+	<div>
+		{{{message}}}
+	</div>
+	<form method="post" class="formulario" id="formLogin" action="/login">
+		<input type='hidden' name="urlDestino" readonly value="{{urlDestino}}">
+		<div>
+			<label for="identificacao">				
+				<p>Identificação:</p>
+				
+			</label>
+			<input type="text" name="identificacao" id="identificacao" required>
+		</div>
+		<div>
+			<label for="senha">
+				<p>Senha:</p>
+			</label>
+			<input type="password" name="senha" id="senha" required>
+			<a href="/alterarsenha" class="mensagens-login" title='alterar senha'>Esqueci minha senha</a>
+		</div>
+		<input type='hidden' name='_csrf' value={{csrfToken}} >
+		<div>
+			<button type="submit" class="mensagens-login">Entrar</button>
+		</div>
+	</form>
+</main>
+{{> footer}}

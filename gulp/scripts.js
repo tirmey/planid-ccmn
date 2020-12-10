@@ -1,5 +1,6 @@
 const gulp = require("gulp"),
 			babel = require('gulp-babel'),
+			//uglify = require('gulp-uglify-es').default,
 			uglify = require('gulp-terser'),
 			newer = require('gulp-newer'),
 			rename = require("gulp-rename");
@@ -15,7 +16,7 @@ gulp.task("minifyJs", () => {
 			dest: "./public/dist/scripts/planidsVersions/",
 			ext: ".min.js"
 		}))
-		/* o uglify (abaixo) minifica o código para produção. Sugiro mantê-lo comentado em desenvolvimento, para facilitar o debug da aplicação */
+		/* habilitar o uglify para produção, comentar em desenvolvimento */
 		//.pipe(uglify())
 		.pipe(rename(function (path) {
 			path.extname = ".min.js";

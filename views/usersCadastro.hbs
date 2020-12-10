@@ -1,0 +1,38 @@
+{{> header}}
+{{> topBarDesktop}}
+
+<h1>Portal do CCS - Cadastramento de usuários</h1>
+<p class='centralizado'>Preencha os dados abaixo para cadastrar seu perfil de usuário do Portal do CCS.</p>
+<form class="formulario" id='user-form' method="POST" action="/users/cadastro/novo-usuario" novalidate>
+  <div>
+    <input type='hidden' name='_csrf' value={{csrfToken}} >
+  </div>
+  <div>
+    <label for="user-nome">
+      <p>Nome completo:</p>
+    </label>
+    <input class='readonly' type="text" id="nome" name="nome" value='{{nome}}' required readonly>
+  </div>
+  <div>
+    <label for="user-email">
+      <p>E-mail:</p>
+    </label>
+    <input class='readonly' type="email" id="email" name="email" value='{{email}}' required readonly>
+  </div>    
+  <div class="user-categoria">
+    <label for="user-categoria">
+      <p>Categoria:</p>
+    </label>
+    <select name='categoria' id='user-categoria'>
+      <option disabled selected>Selecione uma opção:</option>
+      <option value='docente'>docente</option>
+    </select>
+  </div>  
+  <div>
+    <input type="submit" class='btn-submit inativo' id='btn-submit' value="enviar">
+  </div>
+</form>
+<script src="/dist/scripts/utilidadesSistemas.min.js" defer></script>
+<script src="/dist/scripts/users.min.js" defer></script>
+
+{{> footer}}

@@ -305,7 +305,7 @@
         }
         h3 {
             font-size: 4vw;
-            padding: 15px 0 5px;
+            // padding: 15px 0 5px;
         }
         .footer-endereco {
             padding-top: 20px;
@@ -667,7 +667,7 @@
         }
         h3 {
             font-size: 4vw;
-            padding: 25px 0 5px;
+            //padding: 25px 0 5px;
         }
         .footer-endereco {
             padding-top: 0;
@@ -1255,7 +1255,7 @@
         flex-flow: row nowrap;
         height: $alturaTopbarDesktop;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: flex-end;
         padding: 0 15px;
         z-index: 2;
         background-color: $topbarColor;
@@ -1278,84 +1278,15 @@
         top: 7px;
         left:0;
     }
+    
     .top-bar-desktop > div:not(.abrir-menu-desktop-div) {
         align-self: flex-start;
         display: flex;
         align-items: flex-start;
         flex-grow: 1;
-        justify-content: space-between;
+        justify-content: flex-end;        
     }
 
-    .busca-e-navegacao-desktop {
-        min-width: 230px;
-        flex-grow: 1;
-        button {
-            border: none;
-            color: #ccc;
-            &:hover {
-                color: #fff;
-            }
-        }
-    }
-    #form-busca-geral-desktop {
-        display: flex;
-        justify-content: flex-end;
-        .fa-search {
-            color: #ccc;
-            &:hover {
-                color: #fff;
-            }
-        }
-    }
-    #input-busca-geral-desktop {
-        border: 1px solid #bbb;
-        border-radius: 3px;
-        height: 40px;
-        padding-left: 10px;
-        max-width: 400px;
-        background-color: rgba(255, 255, 255, 0);
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.5s;
-        position: relative;
-        font-size: 0.8em;
-        color: #ccc;
-        &.action {
-            opacity: 1;
-            pointer-events: all;
-            padding-left: 5px;
-        }
-        &::placeholder {
-            color: #bbb;
-        }
-    }
-
-    #main-nav, #main-nav.action {
-        display: flex;
-        flex-flow: row wrap;
-        width: $larguraMenuDesktop;
-        justify-content: center;
-        position: absolute !important;
-        transition: left 0.5s;
-        //top: 474px;
-        box-shadow: 5px 5px 18px -5px rgba(0, 0, 0, 0.71);
-        padding: 65px 5px 5px 0;
-        z-index: 1;
-        background-color: #2c3531;
-        overflow: auto;
-        &::-webkit-scrollbar {
-            display: none;
-        }
-    }
-
-    #main-nav {
-        left: calc(-#{$larguraMenuDesktop} - 30px);
-        height: calc(100vh - 50px);
-        max-height: calc(100vh - 50px);
-    }
-    #main-nav.action {
-        left: 0;
-    }
     #abrir-menu-desktop {
         font-size: 1.5em;
         position: relative;
@@ -1436,7 +1367,7 @@
     .deslocar {
         position: relative;
         left: 0;
-        transition: all 0.2s;
+        transition: all 0.5s;
     }
     .deslocar.action {
         position: relative;
@@ -2206,6 +2137,16 @@
     .website, .contatos, .redes {
         padding-left: 0;
     }
+
+    .footer-redes-sociais .redes {
+        display: flex;
+        justify-content: center;
+
+        i {
+            padding-right: 10px;
+            padding-left: 10px;
+        }
+    }
     .footer-endereco {
         padding-top: 30px;
         position: relative;
@@ -2217,13 +2158,16 @@
         max-width: 1300px;
         margin: 0 auto;
         padding: 20px 0;
+
+        div {
+            min-width: 250px;
+        }
     }
     .footer-decania-contato {
         display: flex;
         align-items: baseline;
         justify-content: space-around;
-
-        margin: 45px auto 20px;
+        margin-bottom: 25px;
     }
     .footer-phone {
         width: 200px;

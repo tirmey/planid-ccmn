@@ -467,7 +467,7 @@ const imprimirPlanids = planids => {
   } else {
     fileName = unidade;
   }
-  //document.getElementsByTagName("title")[0].innerHTML = `Planids ${semestreImpressao} | ${fileName}`;  
+  document.getElementsByTagName("title")[0].innerHTML = `Planids ${semestreImpressao} | ${fileName}`;  
   const impressos = document.createElement('div');
   impressos.classList.add('planids-impressos')
   for (let i = 0; i < planids.length; i++) {

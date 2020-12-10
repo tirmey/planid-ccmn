@@ -1,62 +1,41 @@
 "use strict";
 
-const semestre = `${moment().year()}-${moment().quarter() === 1 || moment().quarter() === 2 ? "1" : "2"}`,
-  proximoSemestre = `${moment()
-    .add(6, "month")
-    .year()}-${
-    moment()
-      .add(6, "month")
-      .quarter() === 1 ||
-    moment()
-      .add(6, "month")
-      .quarter() === 2
-      ? "1"
-      : "2"
-  }`,
-  semestreAnterior = `${moment()
-    .subtract(6, "month")
-    .year()}-${
-    moment()
-      .subtract(6, "month")
-      .quarter() === 1 ||
-    moment()
-      .subtract(6, "month")
-      .quarter() === 2
-      ? "1"
-      : "2"
-  }`,
-  inicioPreenchimentoPlanid = new Date(2020, 0, 13).getTime(),
-  fimPreenchimentoPlanid = new Date(2020, 11, 31).getTime(),
-  inicioNovoPlanid = new Date(2020, 0, 13).getTime(),
-  fimNovoPlanid = new Date(2020, 10, 29).getTime(),
-  habilitarPreenchimentoPlanid = new Date().getTime() > inicioPreenchimentoPlanid && new Date().getTime() < fimPreenchimentoPlanid,
-  prazoNovoPlanid = new Date().getTime() > inicioNovoPlanid && new Date().getTime() < fimNovoPlanid,
-  semanasAula = 15,
-  // semanasAulaMedicina = 22,
-  planid = {
-    pagina: 1, // página de início de exibição do planid aberto
-    totalPaginas: 0, // total de seções do planid. Calculado 'on the fly'
-    clicouFinalizar: false, //indica que o usuario clicou em finalizar para enviar o formulário
-    emEdicao: "", //id de um planid JÁ SALVO, quando está aberto, em edição.
-    habilitarNovoPlanid: true, // determina se será exibido o botão de novo planid
-    campoSelecionado: "", //informa o input selecionado, para validação
-    cargaHorariaTotal: 0,
-    CHIdeal: typeof dashboard === "undefined" ? 40 : dashboard.user.regime === "20h" ? 20 : 40,
-    exibiuTutorial: false,
-    tutorialPaginaAtual: 0,
-    unidadePreenchimentoPlanid: "",
-    autosaving: false,
-    intervaloAutosave: 300000,
-    clicouFecharPlanid: false,
-    exibiuAlertaDadosOffline: false,
-  }, 
-  caret = `
-        <div class='icone-abertura-container-atividade'>
-          <div>         
-            <span class='texto-exibir'><i class='fa fa-window-maximize'></i></span><span class='texto-ocultar'><i class='fa fa-times'></i></span> 
-          </div>          
-        </div>
-      `,
+  let 
+    semestre = '2020-2',
+    ano = +semestre.split('-')[0],
+    semestreAnterior = semestre.split('-')[1] === '1' ? `${ano - 1}-2`  : `${ano}-2`,
+    proximoSemestre = semestre.split('-')[1] === '1' ? `${ano}-2`  : `${ano  + 1}-1`,
+    inicioPreenchimentoPlanid = new Date(2020, 0, 13).getTime(),
+    fimPreenchimentoPlanid = new Date(2020, 11, 15).getTime(),
+    inicioNovoPlanid = new Date(2020, 0, 13).getTime(),
+    fimNovoPlanid = new Date(2020, 11, 15).getTime(),
+    habilitarPreenchimentoPlanid = new Date().getTime() > inicioPreenchimentoPlanid && new Date().getTime() < fimPreenchimentoPlanid,
+    prazoNovoPlanid = new Date().getTime() > inicioNovoPlanid && new Date().getTime() < fimNovoPlanid,
+    semanasAula = 15,
+    planid = {
+      pagina: 1, // página de início de exibição do planid aberto
+      totalPaginas: 0, // total de seções do planid. Calculado 'on the fly'
+      clicouFinalizar: false, //indica que o usuario clicou em finalizar para enviar o formulário
+      emEdicao: "", //id de um planid JÁ SALVO, quando está aberto, em edição.
+      habilitarNovoPlanid: true, // determina se será exibido o botão de novo planid
+      campoSelecionado: "", //informa o input selecionado, para validação
+      cargaHorariaTotal: 0,
+      CHIdeal: typeof dashboard === "undefined" ? 40 : dashboard.user.regime === "20h" ? 20 : 40,
+      exibiuTutorial: false,
+      tutorialPaginaAtual: 0,
+      unidadePreenchimentoPlanid: "",
+      autosaving: false,
+      intervaloAutosave: 300000,
+      clicouFecharPlanid: false,
+      exibiuAlertaDadosOffline: false,
+    }, 
+    caret = `
+      <div class='icone-abertura-container-atividade'>
+        <div>         
+          <span class='texto-exibir'><i class='fa fa-window-maximize'></i></span><span class='texto-ocultar'><i class='fa fa-times'></i></span> 
+        </div>          
+      </div>
+    `,
   formStep = (section, number, before, after) => {
     const svg = position => `
           <svg class="form-step-svg ${position}" viewBox="0 0 376.78 68"><path d="M801.65,411H489.21a3,3,0,0,1-1.49-5.6l41.76-24.07a5,5,0,0,0,0-8.66L487.72,348.6a3,3,0,0,1,1.49-5.6H801.65a20,20,0,0,1,10,2.67l49.85,28.73a3,3,0,0,1,0,5.2l-49.85,28.73A20,20,0,0,1,801.65,411Z" transform="translate(-486.21 -343)" /></svg>`;
@@ -74,7 +53,9 @@ const semestre = `${moment().year()}-${moment().quarter() === 1 || moment().quar
     document.getElementById(`submit-planid`).click();        
     document.querySelector(`.overlay-novo-planid`).insertAdjacentHTML('beforeend', autosaveMessage); 
   };
-
+console.log('semestre: >>>>>> ', semestre);
+console.log('semestreAnterior: >>>>>> ', semestreAnterior);
+console.log('proximoSemestre em utils: >>>>>> ', proximoSemestre);
 const dicas = {
   disciplinas_geral: `<p>Neste campo, devem ser incluídas todas as disciplinas de graduação e de pós que o/a docente tenha ministrado, sendo ou não responsável, e que tenham um código da UFRJ.A carga horária indicada deve ser aquela que efetivamente foi ministrada pelo/a docente</p><p>Disciplinas com dois ou mais docentes responsáveis devem ter a carga horária dividida entre os docentes, indicando, para cada docente, a carga de sua responsabilidade direta</p>`,
   ["atividades-complementares-ensino_geral"]: `<p>1) Preparação de provas e aula por semestre: indicar até 25% da carga horária das disciplinas "efetivas", ou seja, com turmas que necessitem preparação de aulas e provas e não seminários, etc. Exemplo: No caso de 60h semestrais colocado na parte acima, 15h semestrais serão incluídas neste item.<p><p>2) Correção de prova/trabalho: indicar de 20% a 30% da carga horária das disciplinas "efetivas", dependendo do tamanho da turma e do tipo de trabalho. Sugestão adicionar até 15h semestrais</p><p>3)Atendimento ao aluno: tirar dúvidas (fora do horário de aula), explicações de trabalhos, etc. Sugestão: indicar entre 5-10 horas /semestre</p><p>4) Correção de Monografias/Dissertação/Teses: Serão considerados entre 0 e 5 teses ou dissertação por semestre. Sugestão: Adicionar 4 horas por tese/dissertação e 2 horas/ monografia</p><p>5) Participação em bancas como membro ou revisor: Sugestão adicionar 4 horas / por tese/ dissertação e 2 horas/ monografia</p><p>6) Atividades fora da sede: São reuniões com grupos de pesquisa externos, workshops, seminários e congressos. Sugestão até 50 horas/ semestre (Em torno de 8% do Total)</p><p>OBS: Caso a atividade demande um número de horas maior do que a sugerida, o/a docente deverá justificar no campo"Observações" abaixo.</p>`
@@ -357,7 +338,7 @@ const carregarScriptPlanid = src => {
   } 
 };
 
-const selecionarDadosVersao = (sem) => {
+const selecionarDadosVersao = (sem) => {  
   if (semestreImpressao) {
     switch (semestreImpressao) {
       case '2019-2':
@@ -384,3 +365,4 @@ const selecionarDadosVersao = (sem) => {
 };
 
 selecionarDadosVersao();
+

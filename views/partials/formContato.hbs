@@ -1,0 +1,31 @@
+<div>
+    <label><p>Cargos</p></label>
+    <div class='inserir-cargo btn-acao'>
+        <i class='fa fa-plus-circle'></i>
+        <span>Inserir cargo</span>
+
+    </div>
+    <div class="cargos">    
+        <div class="input-cargos-div box-cinza">
+            <i class="fa fa-times-circle"></i>
+            <div class="input-cargos">
+                <label for="contexto">contexto</label>
+                <input type="text" name="contexto" id="contexto${total}">
+            </div>
+            <div class="input-cargos">
+                <label for="cargo${total}">cargo</label>
+                <input type="text" name="cargo" id="cargo${total}">
+            </div>        
+            
+        </div>
+    </div>
+</div>
+<div>
+    <label for="grupos"><p>grupos</p></label>
+    <input type="text" name="grupos" id="grupos" placeholder="grupos">
+</div>
+<div id="permissoes"></div>
+<input type="hidden" value={{csrfToken}} name='_csrf' >
+<div>
+    <input type="submit" id="btn-submit" value="enviar">
+</div>

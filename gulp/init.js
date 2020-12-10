@@ -32,8 +32,8 @@ gulp.task('nodemon', function (cb) {
 
 gulp.task('browser-sync', ['nodemon'], function() {
     browserSync({
-        proxy: "localhost:3000",  // a porta local, definida no arquivo app.js
-        port: 5000,  // nova porta, onde o browser-sync atuará, implementando o hot-reload quando há atualização de código
+        proxy: "localhost:3000",  // local node app address
+        port: 5000,  // use *different* port than above
         notify: true
     });
 });

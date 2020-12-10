@@ -90,21 +90,6 @@ var contatoSchema = new mongoose.Schema({
         ref: 'Reserva',
         default: undefined
     }],
-    manutencao: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Ds',
-        default: undefined
-    }],    
-    veiculo: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Veiculo",
-        default: undefined,
-    }],
-    mdm: [{
-        type: String,
-        ref: 'AlmoxarifadoMDM',
-        default: undefined
-    }],
     notifServicos: {
         email: Boolean,
         site: Boolean

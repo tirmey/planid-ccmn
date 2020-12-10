@@ -1,0 +1,190 @@
+
+        {{#unless auditorio}}
+            {{> agendaSuspensa}}
+        {{/unless}}
+        <footer class="footer deslocar">
+            <div class="footer-login login-form">
+                {{#if usuario}}
+                    {{> atalhosUsuario}}
+                {{else}}
+                    <div class="footer-login-header visitante">
+                        <!--<p>login</p>--><i class="fa fa-user"></i>
+                        <i class="fa fa-caret-down seta"></i>
+                    </div>
+                    <form class='formulario' method="post" class="" id="formLoginRodape" action="/login">
+                        <input type='hidden' name='_csrf' value={{csrfToken}} >
+                        <div>
+                            <label for='email-login-footer'>
+                                <p>identificação:</p>
+                                <i class='fa fa-info'></i>
+                                <span class="dica">Servidores: SIAPE, estudantes: DRE, demais usuários: CPF</span>	
+                            </label>                            
+                            <input type="text" name="identificacao" id="email-login-footer" required>
+                        </div>
+                        <div>
+                            <label for="senha-login-footer"><p>senha:</p></label>
+                            <input type="password" name="senha" id="senha-login-footer" required>
+                            <a href="/users/cadastro" class="mensagens-login" title='novos usuários'>novos usuários | </a>
+                            <a href="/alterarsenha" class="mensagens-login" title='alterar senha'> esqueci minha senha</a>
+                        </div>
+                        <div>
+                            <button type="submit" class="mensagens-login">Entrar</button>
+                        </div>
+                    </form>
+                {{/if}}
+            </div>
+            <div class="footer-endereco footer-section">
+                <div class="footer-minerva">
+                    <img src="/img/minervaFooter.png" alt="Minerva">
+                </div>
+                <h1>CENTRO DE CIÊNCIAS DA SAÚDE</h1>
+                <hr>
+                <h2>UFRJ</h2>
+                <div class="footer-decania-contato">
+                    <div class="footer-decania-contato__div">                    
+                    <a target="_blank" href="https://goo.gl/maps/wWfRpxDbuWD2" target="_blank" class="mapa">
+                        <h3><i class="fa fa-map-marker"></i></h3>
+                        <hr class='footer-decania-contato__divider'>
+                        <div>
+                            <p>Avenida Carlos Chagas Filho, 373</p>
+                            <p>Cidade Universitária | Rio de Janeiro</p>
+                            <p>RJ - CEP: 21941-902</p>
+                        </div>
+                    </a>
+                    </div>
+                    <div class="footer-phone footer-decania-contato__div">
+                        <div>
+                            <a href="tel:+552139386701" title='contato telefônico com a Decania do CCS'><h3><i class="fa fa-phone"></i></h3>
+                            <hr class='footer-decania-contato__divider'>
+                            <p>(21) 3938-6701</p></a>
+                        </div>
+                    </div>
+                    <div class="footer-mail footer-decania-contato__div">
+                        <div>
+                            <a href="mailto:decano@ccsdecania.ufrj.br" title='enviar e-mail para a Decania do CCS'><h3><i class="fa fa-envelope"></i></h3>
+                            <hr class='footer-decania-contato__divider'>
+                            <p>decano@ccsdecania.ufrj.br</p></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-outros">
+                <div class="footer-contatos footer-section">
+                    <h3>CONTATOS</h3>
+                    <div class="contatos">
+                        <a href="/equipe-decania" title='Servidores lotados na Decania do CCS'><h3><i class="fa fa-users"></i></h3><p>equipe</p></a>
+                        <a href="/fale-conosco" title='link para a central de comunicação do CCS'><h3><i class="fa fa-envelope"></i></h3><p>fale conosco</p></a>
+                        <a class='abrir-popup-telefones-uteis' title='Emergência (contato telefônico)'><h3><i class="fa fa-shield"></i></h3><p>Telefones de emergência</p></a>
+                    </div>
+                </div>
+                <div class="footer-website footer-section">
+                    <h3>WEBSITE E SISTEMAS</h3>
+                    <div class="website">
+                        <a href="/" class="mapa-div" title='mapa do site'><h3><i class="fa fa-map"></i></h3><p>mapa do site</p></a>
+                        <a href="mailto:webdev@ccsdecania.ufrj.br" title='enviar e-mail para a a seção de desnvolvimento web'><h3><i class="fa fa-envelope"></i></h3>
+                        <p>webdev@ccsdecania.ufrj.br</p></a>
+                    </div>
+                </div>
+                <div class="footer-redes-sociais footer-section">
+                    <h3>REDES SOCIAIS</h3>
+                    <div class="redes">
+                        <a target="_blank" href="https://www.facebook.com/ccsufrj/" title='acessar a pagina do CCS no Facebook'><i class="fa fa-facebook-square"></i></a>
+                        <a target='_blank' href='https://www.youtube.com/channel/UCcGIsM94kfLLKvxcJy29iNw' title='acessar o canal do CCS no Youtube'><i class="fa fa-youtube-play"></i></a>
+                        <a target='_blank' href='https://www.instagram.com/ccs_ufrj/' title='acessar a pagina do CCS no Instagram'><i class="fa fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-ascom">
+                <p>©2019 WEBDEV | Decania do Centro de Ciências da Saúde</p>
+                <p>todos os direitos reservados</p>
+            </div>
+
+        </footer>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        {{#if auditorio}}
+            <script src="/dist/scripts/reservas.min.js" defer></script>
+        {{/if}}
+        
+        {{#if analisePedidos}}
+            <script src="/dist/scripts/reservasAnalise.min.js" defer></script>
+        {{/if}}
+         <!--TinyMCE-->
+        {{#if tinyMCE}}
+            <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=i3b66hnqydhhgvxx4xiurexe30gsujzxql0qi48kafn6f96l" ></script>
+            <script>
+                
+                /*adicionando botão para inserir a tag de imagens automaticamente*/
+                tinymce.PluginManager.add('minhasFuncoes', function(editor, url) {
+
+                    //TINYMCE 5 
+
+		            /*                   
+                    editor.ui.registry.addButton('inserirImagem', {
+                        text: 'Inserir Imagem',
+                        onAction: function() {
+                            editor.insertContent("{imagem}");
+                        }
+                    });
+                    editor.ui.registry.addButton('inserirLegenda', {
+                        text: 'Inserir Legenda',
+                        onAction: function() {
+                            editor.insertContent("{legenda}texto da legenda{/legenda}");
+                        }
+                    });
+                    editor.ui.registry.addButton('inserirCitacao', {
+                        text: 'Inserir Citação',
+                        onAction: function() {
+                            editor.insertContent("{citacao}texto da citacao{/citacao}");
+                        }
+                    });
+		            */   
+
+                    //apagar este bloco depois de 4 de fevereiro
+                    
+                    editor.addButton('inserirImagem', {
+                        text: 'Inserir Imagem',
+                        icon: false,
+                        onclick: function() {
+                            editor.insertContent("{imagem}");
+                        }
+                    });
+                    editor.addButton('inserirLegenda', {
+                        text: 'Inserir Legenda',
+                        icon: false,
+                        onclick: function() {
+                            editor.insertContent("{legenda}texto da legenda{/legenda}");
+                        }
+                    });
+                    editor.addButton('inserirCitacao', {
+                        text: 'Inserir Citação',
+                        icon: false,
+                        onclick: function() {
+                            editor.insertContent("{citacao}texto da citação{/citacao}");
+                        }
+                    });
+                    
+                    //apagar até aqui
+                });
+                
+                tinymce.init({
+                    selector:'textarea.tinyMCE',
+                    plugins: ["link", "paste","minhasFuncoes"],
+                    toolbar: "paste | link | bold | italic | undo redo | styleselect |  link image | inserirImagem | inserirLegenda | inserirCitacao",
+                    menubar: ["insert", "edit"],
+                    default_link_target: "_blank",
+                    branding: false,
+                    height: "400",
+                    entity_encoding : "raw",                    
+                    paste_preprocess: function(plugin, args) {
+                        console.log(args.content);
+                        //args.content += ' preprocess';
+                    }
+                });
+            </script>
+        {{/if}}      
+
+    </div> <!--fechamento do wrapper-->
+    </body>
+</html>

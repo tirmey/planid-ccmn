@@ -1,17 +1,13 @@
+{{> header}}
+{{> topBarDesktop}}
+  <div class='planid-impressao deslocar'>
+    <input type='hidden' name='_csrf' value='{{csrfToken}}' >
+    <div class='print__container planids-imprimir  planids-homologar'></div>
+  </div>    
 
-<div class='planid-impressao deslocar'>
-  <div class='print__container planids-imprimir  planids-homologar'></div>
-</div>    
-
-{{!-- SCRIPTS --}}
-<script src="https://use.fontawesome.com/60e0586006.js" defer></script>
-<script src="/dist/scripts/script.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" defer></script>
-<script src="/dist/scripts/utilidadesSistemas.min.js" defer></script>
-<script src="/dist/scripts/planidUtils.min.js" defer></script>
-
-{{!-- ESTILOS --}}
-<link rel="stylesheet" href="/dist/styles/styles.min.css">
-<link rel="stylesheet" href="/dist/styles/planidImprimir.min.css">
+  <link rel="stylesheet" href="/dist/styles/planidImprimir.min.css">    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" defer></script>
+  <script src="/dist/scripts/utilidadesSistemas.min.js" defer></script>
+  <script src="/dist/scripts/planidUtils.min.js" defer></script>
+  {{!-- <script src="/dist/scripts/planidImprimir.min.js" defer></script> --}} {{!-- Arquivo carregado em planidUtils.js --}}
+{{> footer}}

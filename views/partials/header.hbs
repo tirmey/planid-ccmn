@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+	{{!-- analytics -- comentar em desenvolvimento, descomentar em produção --}}
+	{{#if production}}
+		<script defer src="https://www.googletagmanager.com/gtag/js?id=UA-111452117-1"></script>
+		<script defer>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+			gtag('config', 'UA-111452117-1');
+		</script>
+	{{/if}}
+
+	{{!-- descomentar o script do font-awesome em desenvolvimento, comentar em produção --}}
+	{{#unless production}}
+		<script src="https://use.fontawesome.com/60e0586006.js" defer></script>
+	{{/unless}}
+
+	{{!-- descomentar esses scripts em desenvolvimento, comentar em produção, --}}
+	{{#unless production}}
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js" defer></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/locale/pt-br.js" defer></script>
+	{{/unless}}
+
+	{{!-- comentar esse script em desenvolvimento, descomentar em produção --}}
+	{{#if production}}
+		<script src="/dist/scripts/bundleU64.min.js" defer></script>
+	{{/if}}
+
+	{{!-- script obrigatório --}}
+	<script src="//barra.brasil.gov.br/barra.js" defer></script>
+
+	{{!-- descomentar esses scripts em desenvolvimento, comentar em produção --}}
+	{{#unless production}}
+		<script src="/dist/scripts/script.min.js" defer></script>
+	{{/unless}}
+
+	{{!-- baixei as fontes do endereço para uso local. Manter comentado. Descomentar apenas em caso de problemas com a
+	exibição das fontes --}}
+	{{!--
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto+Condensed:700" rel="stylesheet"> --}}
+
+	<meta charset="utf-8">
+	<meta name="google-site-verification" content="RXKeXvcQJ7c9OL8qXzzWFLhpw0oOxrzgYelUYoapZio" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+	<meta property="creator.productor" content="http://estruturaorganizacional.dados.gov.br/id/unidade-organizacional/426">
+	<meta name="theme-color" content="#2c3531">
+	<meta name="author" content="Centro de Ciências da Saúde">
+	<meta name="description" content="O Centro de Ciências da Saúde (CCS) da Universidade Federal do Rio de Janeiro (UFRJ) compõe unidades de ensino, pesquisa e extensão desta universidade.">
+	{{#if conteudo}}
+	<meta class='meta-og-url' property="og:url" content="https://www.ccs.ufrj.br{{url}}">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="{{conteudo.titulo}}">
+	<meta property="og:description" content="{{conteudo.resumo}}">
+	{{/if}}
+
+	{{!-- temporário --}}
+	{{#if postTitulo}}
+		<meta property="og:type" content="website">
+		<meta property="og:title" content="{{postTitulo}}">
+		<meta property="og:description" content="{{postResumo}}">
+	{{/if}}
+
+	{{#if img}}
+	<meta property="og:image" content="https://www.ccs.ufrj.br/img{{url}}.jpg">
+	{{else}}
+	<meta property="og:image" content="https://www.ccs.ufrj.br/img/marca-facebook.jpg">
+	{{/if}}
+
+	<link rel="stylesheet" href="/dist/styles/styles.min.css">
+
+	<!--favicon-->
+	<link rel="apple-touch-icon" sizes="57x57" href="/img/favicon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/img/favicon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/img/favicon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/img/favicon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/img/favicon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/img/favicon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/img/favicon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/img/favicon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192" href="/img/favicon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/img/favicon/favicon-16x16.png">
+	<link rel="manifest" href="/img/favicon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+
+	<title>Centro de Ciências da Saúde</title>
+</head>
+
+<body>
+	<div id='mensagens-genericas' class='opacidade-zero hidden display-only'>
+		<div id="mensagens-genericas__janela" class="janela"></div>
+	</div>
+	<div id="overlay" class="hidden opacidade-zero"></div>
+	<div id="aviso-campo-invalido" class="hidden opacidade-zero">
+		<i class="fa fa-exclamation-triangle"></i>
+		<i class="fa fa-caret-up"></i>
+		<p>Preencha este campo obrigatório</p>
+	</div>
+	<div class="wrapper">
+		<!--div que envolve todo o conteúdo do body, criado para que o overflow do conteúdo que ocorre quando o menu abre funcione em portáteis-->
+		<a class="ancora" id="anchor-top"></a>
+		<header>
+			<div class="barraBrasil-e-topbar">
+				<div id="barra-brasil" style="background:#7F7F7F; height: 20px; padding:0 0 0 10px;display:block;">
+					<ul id="menu-barra-temp" style="list-style:none;">
+						<li style="display:inline; float:left;padding-right:10px; margin-right:10px; border-right:1px solid #EDEDED"><a
+							 target="_blank" href="http://brasil.gov.br" style="font-family:sans,sans-serif; text-decoration:none; color:white;"
+							 title='link para o Portal do Governo Brasileiro'>Portal do Governo Brasileiro</a></li>
+						<li><a style="font-family:sans,sans-serif; text-decoration:none; color:white;" href="http://epwg.governoeletronico.gov.br/barra/atualize.html"
+							 title='atualize a barra do governo'>Atualize sua Barra de Governo</a></li>
+					</ul>
+				</div>
+				<div class="top-bar">
+					<div class="marca-e-logotipo">
+						<a target="_blank" href="http://ufrj.br" title='acessar o site da UFRJ'>
+							<img class="minerva" src="/img/minerva.png" alt='Minerva - link para o site da UFRJ'>
+						</a>
+						<div class="svg-wrap">
+							<a href="/" title='Retornar à Página principal'>								
+								<svg id="marca" enable-background="new 0 0 304.8 159.8" version="1.1" viewBox="0 0 304.8 159.8" xml:space="preserve"
+								 xmlns="http://www.w3.org/2000/svg">
+									<style type="text/css">
+										.st0 {
+											display: none;
+										}
+										.st1 {
+											display: inline;
+											fill: #EDEDED;
+										}
+										.st2 {
+											display: inline;
+											fill: #C6C6C6;
+										}
+										.st3 {
+											fill: #16A961;
+										}
+										.st4 {
+											fill: #28804D;
+										}
+										.st5 {
+											fill: #2B5B39;
+										}
+										.st6 {
+											fill: #AF3437;
+										}
+										.st7 {
+											fill: #006633;
+										}
+										.st8 {
+											fill-rule: evenodd;
+											clip-rule: evenodd;
+											fill: #FFFFFF;
+										}
+									</style>
+									<g class="st0">
+										<rect class="st1" x="-34.2" y="-27.2" width="373" height="211.5" />
+									</g>
+									<g class="st0">
+										<path class="st2" d="m301.9 86.3h-17.4l-0.1 0.4-4.3 20.8-0.6 0.1-17.1 2.3-0.4 0.1-0.1 0.4-0.3 2.1c-0.2-0.5-0.5-1.1-0.9-1.7 0-0.1-0.1-0.2-0.1-0.2 1.6-1 3-2.3 4.2-3.7 1.5-1.8 2.5-4 3-6.5 0.6-3 0.4-5.7-0.7-7.9-1.2-2.4-3.1-4.1-5.6-5-2-0.7-4.8-1.1-8.7-1.1h-43.1c4-4.1 6.2-9.2 6.6-15 1.7-23.6-18.9-29-32.5-32.6-6.3-1.7-13.5-3.6-13.6-6.3 0.3-0.4 2.8-2 10.4-2s16.2 1.7 20.1 3.9l3 1.8 0.5 0.3 0.2-0.6 9.4-24.7 0.2-0.5-0.5-0.1-3.2-0.9c-1.9-0.5-3.6-1-5.1-1.4-8.8-2.5-13.1-3.8-27.1-3.8-9.7 0-20.3 3.1-28.5 8.2l0.5-1.8 0.1-0.4-0.4-0.2-2.6-1c-7.3-2.8-20-4.1-29.4-4.1-10.1 0.1-19.9 2-28.3 5.6l-1.6-0.6c-8.4-3-17.8-4.6-27-4.6-14.7-0.1-28.9 4.1-39.5 11.6-12.1 8.6-18.7 21-19.1 35.7-0.4 12.4 3.5 22.9 11.4 31.1 10 10.3 25.8 16 44.3 16 9.9 0 20.3-1.7 30.1-5l1.5-0.5c7.8 2.8 16.9 4.3 27 4.3 8.7 0 18-1.1 27.8-3.1 3.4 1 7.3 1.9 11.4 2.5l-2.5 11.9c-0.4 2-0.5 4.4-0.3 7 0.2 2 0.9 3.9 2 5.6 1.1 1.8 2.6 3.2 4.3 4.1 1.6 1 3.7 1.6 6.1 1.9 2.1 0.3 4.1 0.4 5.9 0.4 3.3 0 6.4-0.5 9-1.4 2-0.7 4.1-1.9 6-3.5 2-1.7 3.6-3.6 4.9-5.8 1.2-2.2 2.1-4.5 2.6-6.9l3.6-17.3h0.1l-6.3 30.1-0.7 3.6-0.1 0.6h18l0.1-0.4 2.9-13.9h13.6l0.1-0.4 2.7-12.8h1.1l-4.8 23.3-0.7 3.6-0.1 0.6h18l0.1-0.4 2.2-10.7 3.6 10.8 0.1 0.3h19.6l-0.2-0.6-0.5-1.6c0.5 0.4 1 0.7 1.6 1 2.3 1.3 5.4 1.9 9.6 1.9 4 0 7.5-0.9 10.5-2.7s5.2-4 6.7-6.6c1.3-2.4 2.4-5.8 3.3-10.1l4.7-22.7 0.1-0.6h-0.8zm-241.2-68.6c4.9 0 10.1 0.6 15 1.6-10 8.5-15.5 20.1-15.5 32.7 0 14.5 4.9 26 14.6 34.2-5.5 1.2-11.2 1.8-16.4 1.8-19.9 0-41.2-9.2-41.2-35 0-9.4 3-17.2 9-23.2 7.6-7.6 20.2-12.1 34.5-12.1zm75.4 13.9c-1.2 23.7 19.6 29.1 33.3 32.7 9.2 2.4 13.3 3.8 12.8 6.1-0.3 1.3-3.4 2.7-9.7 2.7-9.1 0-20.6-2.7-27.3-5.3l-3-1.2-0.5-0.2-0.2 0.5-1 3c-0.7 2.1-1.4 4.3-2.1 7-5.8 1.4-11.9 2.1-17.5 2.1-8.3 0-35.4-2-35.4-27.1 0-8.9 3.5-15.8 10.5-20.5 6.2-4.3 15.1-6.6 25-6.6 5.3 0 10.8 0.7 15.9 2-0.4 1.7-0.8 3.3-0.8 4.8zm40 78.9c-0.2 1.2-0.7 2-1.3 2.5s-1.4 0.8-2.5 0.8c-0.9 0-1.3-0.2-1.3-0.3-0.1-0.1-0.2-0.6 0-1.6l2.7-13.1c1.7-0.1 3.3-0.3 4.9-0.4l-2.5 12.1z" />
+									</g>
+									<path class="st3" d="m84.3 87.2l2.7 4.5c-9.6 3.2-19.5 4.8-29 4.8-28.5 0-53.1-14.5-52.2-43.5 0.9-29.2 27.7-44 55.5-44 8.8 0 17.7 1.5 25.8 4.4l-2.7 4.7c-7.6-2.6-15.8-3.9-23.8-3.9-24.3 0-47 12.2-47 38.8 0 25.9 20.2 38.5 44.7 38.5 8.5 0 17.3-1.4 26-4.3z" />
+									<path class="st4" d="m142.4 79.7l2.2 12.4c-9.8 2.1-19.2 3.2-28 3.2-30.8 0-52.9-13.7-52.9-43.3 0-24 21.9-43.2 54.5-43.5 8.4 0 21 1.1 28.1 3.8l-3.5 12.5c-6.8-2.3-14.3-3.5-21.7-3.5-20 0-39 9.1-39 30.7 0 21.9 18.4 30.6 38.9 30.6 7.1 0 14.5-1 21.4-2.9z" />
+									<path class="st5" d="m213 71c-1.3 18.1-22.1 23.5-41.4 24.4-1.1 0.1-2.2 0.1-3.3 0.1-10.7 0-23.1-2.4-29.7-5.9 1.9-5.6 3.4-12.8 5.3-18.5 7.1 2.8 19.2 5.5 28.6 5.5 6.9 0 12.3-1.5 13.1-5.5 3-14.8-47.8-4.5-46.1-39.3 0.6-12.3 20.5-24.1 38.9-24.1 15.8 0 18.6 1.6 31.2 5.1-2.3 6.1-4.7 12.2-7 18.3-4.5-2.6-13.9-4.4-21.9-4.4-7.5 0-13.9 1.6-13.9 5.4 0.1 14.2 48.6 5 46.2 38.9z" />
+									<path class="st6" d="m298.3 89.8l-4 19.1c-0.8 4-1.8 7-3 9.1-1.1 2.1-2.9 3.9-5.4 5.3-2.4 1.5-5.3 2.2-8.7 2.2-3.5 0-6.2-0.5-7.9-1.4-1.8-1-3-2.4-3.6-4.2-0.7-1.8-0.8-4.1-0.5-6.8l10.7-1.4c-0.3 1.5-0.4 2.7-0.3 3.4 0.1 0.8 0.4 1.4 0.9 1.8 0.3 0.3 0.9 0.5 1.7 0.5 1.2 0 2.2-0.5 3-1.3 0.8-0.9 1.3-2.4 1.8-4.6l4.5-21.6h10.8z" />
+									<path class="st6" d="m264 93.8c-0.8-1.6-2-2.6-3.6-3.2s-4.1-0.9-7.5-0.9h-18.1l-7.3 35.1h10.9l3-14.2h1c1 0 1.8 0.3 2.5 0.8 0.5 0.4 1 1.3 1.4 2.7l3.6 10.7h12.1l-3.1-10.2c-0.2-0.5-0.5-1.2-1.1-2.2-0.6-0.9-1-1.5-1.3-1.8-0.5-0.4-1.4-0.9-2.6-1.3 1.7-0.4 3-0.8 4.1-1.4 1.6-0.9 3-2 4.1-3.4s1.9-3.1 2.3-5c0.5-2.2 0.4-4.1-0.4-5.7zm-10.6 6.6c-0.2 0.8-0.5 1.5-1.1 2-0.6 0.6-1.3 0.9-2 1.1-1.5 0.3-2.5 0.5-3 0.5h-4.6l1.5-7.1h4.8c2 0 3.3 0.3 3.9 0.9 0.5 0.6 0.7 1.4 0.5 2.6z" />
+									<polygon class="st6" points="211.3 97.3 210.1 103.4 223.7 103.4 222.2 110.5 208.6 110.5 205.6 124.9 194.7 124.9 202 89.8 228.8 89.8 227.3 97.3" />
+									<path class="st6" d="m194.8 89.8l-4.4 20.9c-0.4 2.1-1.2 4-2.2 5.9-1 1.8-2.4 3.5-4 4.8-1.7 1.4-3.3 2.3-5 2.9-2.3 0.8-4.9 1.2-7.8 1.2-1.7 0-3.6-0.1-5.5-0.4-2-0.2-3.5-0.7-4.8-1.4-1.2-0.7-2.2-1.7-3.1-3-0.8-1.3-1.3-2.7-1.5-4-0.2-2.2-0.1-4.2 0.2-5.9l4.4-20.9h10.9l-4.5 21.4c-0.4 1.9-0.2 3.4 0.6 4.5s2.2 1.6 4.1 1.6 3.4-0.5 4.7-1.6 2.1-2.6 2.5-4.5l4.5-21.4h10.9z" />
+									<path class="st3" d="m262.9 50v-6.5c8.1 0 14.6-6.6 14.6-14.6s-6.6-14.6-14.6-14.6v-6.5c11.6 0 21.1 9.5 21.1 21.1s-9.4 21.1-21.1 21.1z" />
+									<rect class="st5" x="238.6" y="7.8" width="16.2" height="6.5" />
+									<path class="st4" d="m246.7 50c-8.9 0-16.2-7.3-16.2-16.2h6.5c0 5.4 4.4 9.8 9.8 9.8s9.8-4.4 9.8-9.8-4.6-9.8-9.9-9.8h-8.1v-6.5h8.1c8.9 0 16.2 7.3 16.2 16.2s-7.3 16.3-16.2 16.3z" />
+									<path class="st6" d="m239 65h-5.3c-0.5 1.1-0.9 2-1.1 2.7-0.2 0.6-0.3 1.2-0.3 1.7v0.2h-0.3-0.2c-0.4 0-0.7-0.1-1-0.3-0.2-0.2-0.3-0.4-0.3-0.8s0.6-1.8 1.9-4.3 2.4-4.9 3.3-7.1c-0.1-0.1-0.2-0.3-0.3-0.4s-0.2-0.3-0.4-0.4c0.2-0.3 0.5-0.5 0.7-0.7 0.2-0.1 0.4-0.2 0.6-0.2 0.3 0 0.6 0.2 0.8 0.5 0.3 0.4 0.6 1 0.9 1.8s0.7 1.8 1.3 3.1c1.8 4.6 3.1 7.2 3.8 7.9-0.2 0.3-0.5 0.5-0.7 0.6s-0.4 0.2-0.7 0.2c-0.7 0-1.4-1.1-2.2-3.4-0.3-0.5-0.4-0.8-0.5-1.1zm-2.6-6.3l-0.5 1.1c-0.8 1.8-1.3 3.1-1.7 3.9h4.1c-0.3-0.9-0.7-1.8-1-2.6-0.2-0.9-0.5-1.7-0.9-2.4z" />
+									<path class="st6" d="m256.5 69.6c-1.2-1.2-2.8-3-5-5.5-2.1-2.5-3.7-4.2-4.7-5.3 0 2.5 0.1 5 0.1 7.8v1.3c0 0.6-0.1 1.1-0.2 1.3s-0.4 0.3-0.8 0.3c-0.2 0-0.5 0-0.8-0.1s-0.5-0.2-0.8-0.4c0.4-0.6 0.6-1.5 0.7-2.6s0.2-3.1 0.2-6c0-1.3-0.1-2.3-0.2-2.9-0.2-0.6-0.5-1-0.9-1.2 0.3-0.3 0.5-0.6 0.8-0.7 0.2-0.1 0.4-0.2 0.7-0.2 0.2 0 0.4 0.1 0.6 0.2s0.5 0.4 0.7 0.7l0.4 0.4c2.5 3 5.3 6.2 8.4 9.7v-2.6-1.9c0-1.7-0.1-3.1-0.2-4s-0.4-1.6-0.7-2.2c0.3-0.2 0.6-0.3 0.8-0.3 0.2-0.1 0.5-0.1 0.7-0.1 0.4 0 0.6 0.1 0.8 0.3 0.1 0.2 0.2 0.7 0.2 1.4 0 0.4 0 1.5-0.1 3.2s-0.1 3.2-0.1 4.4c0 0.8 0 1.6 0.1 2.3 0 0.7 0.1 1.4 0.2 2l-0.9 0.7z" />
+									<path class="st6" d="m267.3 69.8c-1 0-1.9-0.2-2.8-0.5s-1.6-0.8-2.3-1.4c-0.7-0.7-1.2-1.4-1.6-2.3s-0.5-1.9-0.5-3 0.2-2.1 0.6-3 0.9-1.7 1.7-2.4c0.7-0.7 1.6-1.2 2.5-1.6 1-0.4 2-0.5 3.1-0.5 2.2 0 4 0.6 5.3 1.9s2 2.9 2 5c0 1-0.2 2-0.5 2.9-0.4 0.9-0.9 1.7-1.6 2.4-0.8 0.8-1.7 1.4-2.7 1.9-0.9 0.4-2 0.6-3.2 0.6zm6-7.7c0-1.7-0.5-3-1.5-4s-2.3-1.5-4-1.5-3.1 0.5-4.1 1.6-1.5 2.5-1.5 4.2 0.5 3.1 1.5 4.1c1 1.1 2.3 1.6 3.9 1.6 1.7 0 3.1-0.6 4.1-1.7 1.1-1.1 1.6-2.5 1.6-4.3z" />
+									<path class="st6" d="m277.5 67.3c0.3 0.2 0.6 0.3 0.9 0.3 0.3 0.1 0.6 0.1 0.9 0.1 0.8 0 1.4-0.2 1.8-0.5 0.4-0.4 0.7-0.8 0.7-1.4 0-0.7-0.6-1.6-1.8-2.5l-0.1-0.1c-1.7-1.4-2.5-2.5-2.5-3.6 0-0.5 0.1-0.9 0.3-1.4s0.5-0.9 0.9-1.3c0.6-0.6 1.2-1 1.9-1.3s1.4-0.4 2.1-0.4c0.5 0 0.9 0.1 1.1 0.3 0.3 0.2 0.4 0.4 0.4 0.8 0 0.1 0 0.3-0.1 0.5s-0.2 0.4-0.4 0.7c-0.3-0.1-0.5-0.2-0.8-0.2s-0.5-0.1-0.8-0.1c-0.8 0-1.5 0.2-2 0.6s-0.7 0.9-0.7 1.5c0 0.4 0.1 0.7 0.3 1.1 0.2 0.3 0.6 0.7 1.1 1.1l0.3 0.3c1.8 1.5 2.7 2.7 2.7 3.8 0 0.4-0.1 0.8-0.2 1.2s-0.4 0.8-0.6 1.1c-0.5 0.6-1.1 1.1-1.8 1.4s-1.5 0.5-2.3 0.5c-0.6 0-1-0.1-1.3-0.3s-0.4-0.5-0.4-0.8c0-0.2 0-0.4 0.1-0.5 0-0.4 0.1-0.7 0.3-0.9z" />
+									<path class="st7" d="m226.6 77.3c1.3 0.3 2.8 0.6 4.3 0.9 1.5 0.2 3 0.4 4.5 0.6 3 0.3 6.1 0.4 9.1 0.5 6.1 0 12.3-0.4 18.4-1.4 6.1-0.9 12.2-2.1 18.2-3.6 3-0.8 6-1.7 8.9-2.8 1.4-0.6 2.9-1.2 4.3-1.9s2.8-1.5 3.9-2.6c-1 1.2-2.4 2-3.7 2.9-1.3 0.8-2.7 1.5-4.2 2.2-2.8 1.3-5.8 2.4-8.7 3.5-5.9 2-12 3.6-18.1 5s-12.4 2.3-18.8 2.7c-3.2 0.2-6.4 0.3-9.6 0.2-1.6 0-3.2-0.1-4.8-0.3-1.6-0.1-3.2-0.3-4.9-0.6-1.4-0.3-2.4-1.7-2.1-3.1s1.7-2.4 3.1-2.1c0-0.1 0.1-0.1 0.2-0.1z" />
+									<path class="st8" d="m21 136.4c-0.5-0.2-1.1-0.4-1.6-0.5-0.6-0.1-1.1-0.2-1.7-0.2-0.7 0-1.4 0.1-2.1 0.3s-1.4 0.5-2 0.8c-0.7 0.4-1.3 0.8-1.8 1.3s-1 1-1.4 1.6-0.7 1.2-1 1.8-0.5 1.3-0.6 2c-0.2 1.1-0.1 2.1 0.1 3s0.7 1.8 1.4 2.5c0.4 0.5 0.9 0.9 1.5 1.2 0.5 0.3 1.1 0.6 1.7 0.7 0.6 0.2 1.3 0.3 2 0.3 0.4 0 0.8 0 1.1-0.1 0.4-0.1 0.7-0.1 1.1-0.2s0.8-0.2 1.2-0.4l0.7-4.6c-0.3 0.3-0.7 0.6-1.1 0.8s-0.8 0.4-1.2 0.5-0.8 0.2-1.3 0.2c-0.6 0-1.1-0.1-1.6-0.3s-0.8-0.5-1.1-0.8c-0.3-0.4-0.5-0.8-0.6-1.3s-0.1-1 0-1.6 0.3-1.1 0.5-1.6c0.3-0.5 0.6-0.9 1-1.3s0.9-0.7 1.4-0.9 1.1-0.3 1.6-0.3c0.4 0 0.9 0.1 1.2 0.2 0.4 0.1 0.7 0.3 1.1 0.5 0.3 0.2 0.6 0.5 0.8 0.9l0.7-4.5zm3.8 7.9c0.1-0.3 0.3-0.6 0.5-0.9 0.2-0.2 0.5-0.4 0.8-0.5s0.6-0.2 1-0.2c0.3 0 0.6 0.1 0.9 0.2s0.5 0.3 0.6 0.5c0.2 0.2 0.2 0.5 0.3 0.8h-4.1v0.1zm7.2 1.6l-0.1 0.4h-7.4c-0.1 0.7 0 1.3 0.3 1.7s0.8 0.6 1.6 0.6c0.4 0 0.7-0.1 1-0.2s0.6-0.4 0.8-0.7h3.4c-0.2 0.6-0.6 1.1-1 1.5s-0.8 0.8-1.4 1.1c-0.5 0.3-1 0.5-1.6 0.6s-1.1 0.2-1.7 0.2c-0.8 0-1.6-0.1-2.2-0.3-0.7-0.2-1.2-0.6-1.7-1-0.4-0.4-0.8-1-0.9-1.7-0.2-0.7-0.2-1.4-0.1-2.3 0.1-0.8 0.4-1.6 0.8-2.2 0.4-0.7 0.8-1.2 1.4-1.7s1.2-0.8 1.9-1 1.5-0.4 2.3-0.4c1.2 0 2.1 0.2 2.8 0.7 0.7 0.4 1.3 1.1 1.6 1.9 0.3 0.7 0.3 1.7 0.2 2.8zm5.9-5.2h-3.5l-1.6 10h3.5l0.8-5.2c0.1-0.3 0.1-0.6 0.2-0.9s0.2-0.5 0.4-0.7 0.4-0.4 0.6-0.5c0.3-0.1 0.6-0.2 0.9-0.2s0.6 0.1 0.8 0.2 0.3 0.3 0.4 0.5 0.1 0.4 0.1 0.6v0.7c0 0.2-0.1 0.4-0.1 0.6l-0.8 4.9h3.5l1-6.2c0.1-0.6 0.1-1.2 0.1-1.7-0.1-0.5-0.2-0.9-0.5-1.3-0.2-0.4-0.6-0.6-1-0.8s-1-0.3-1.7-0.3c-0.5 0-0.9 0-1.3 0.2-0.4 0.1-0.8 0.3-1.1 0.5-0.4 0.2-0.7 0.6-1 1l0.3-1.4zm12.8 2.9h2l0.5-2.9h-2l0.5-3h-3.5l-0.5 3h-1.1l-0.5 2.9h1.1l-1.1 7.1h3.5l1.1-7.1zm7.1-2.9l-0.3 1.6c0.4-0.6 1-1.1 1.6-1.3 0.6-0.3 1.3-0.4 1.9-0.4h0.7l-0.5 3.4c-0.2-0.1-0.4-0.2-0.7-0.3-0.2 0-0.5-0.1-0.8-0.1-0.5 0-0.9 0.1-1.2 0.2l-0.9 0.6c-0.2 0.3-0.4 0.6-0.5 1l-0.3 1.2-0.6 4h-3.5l1.6-10h3.5v0.1zm10.2-0.3c-0.6 0-1.3 0.1-1.9 0.2-0.6 0.2-1.2 0.4-1.7 0.7-0.6 0.3-1 0.7-1.5 1.1-0.4 0.4-0.8 0.9-1.1 1.5s-0.5 1.2-0.6 1.9-0.1 1.3 0 1.9 0.3 1.1 0.6 1.5 0.7 0.8 1.2 1.1 1 0.5 1.5 0.7c0.6 0.2 1.2 0.2 1.8 0.2s1.3-0.1 1.9-0.2c0.6-0.2 1.2-0.4 1.8-0.7 0.5-0.3 1-0.7 1.5-1.1 0.4-0.4 0.8-0.9 1.1-1.5s0.5-1.2 0.6-1.9 0.1-1.3 0-1.9-0.3-1.1-0.6-1.5-0.7-0.8-1.1-1.1c-0.5-0.3-1-0.5-1.5-0.7-0.7-0.1-1.3-0.2-2-0.2zm-0.4 3.1c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.4 1.1-0.5 0.6-0.9 0.8-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.5-1.1c0.2-0.3 0.5-0.6 0.9-0.8 0.2-0.2 0.7-0.3 1.2-0.3zm20.6 7.2h3.5l2.6-16.1h-3.5l-1.1 7.1c-0.2-0.3-0.5-0.5-0.8-0.7s-0.6-0.3-1-0.4-0.7-0.1-1.1-0.1c-0.7 0-1.4 0.2-2.1 0.4-0.7 0.3-1.2 0.7-1.8 1.2-0.5 0.5-0.9 1.1-1.3 1.7-0.3 0.6-0.6 1.3-0.7 2-0.1 0.6-0.1 1.1 0 1.7 0.1 0.5 0.2 1 0.4 1.5 0.2 0.4 0.5 0.8 0.9 1.2 0.4 0.3 0.8 0.6 1.3 0.8s1 0.3 1.6 0.3c0.4 0 0.8-0.1 1.2-0.2s0.8-0.3 1.1-0.5c0.4-0.2 0.7-0.5 0.9-0.8l-0.1 0.9zm-1-7.2c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.4 1.1-0.5 0.6-0.9 0.8-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.5-1.1c0.2-0.3 0.5-0.6 0.9-0.8 0.3-0.2 0.7-0.3 1.2-0.3zm10.6 0.8c0.1-0.3 0.3-0.6 0.5-0.9 0.2-0.2 0.5-0.4 0.8-0.5s0.6-0.2 1-0.2c0.3 0 0.6 0.1 0.9 0.2s0.5 0.3 0.6 0.5c0.2 0.2 0.2 0.5 0.3 0.8h-4.1v0.1zm7.1 1.6l-0.1 0.4h-7.4c-0.1 0.7 0 1.3 0.3 1.7s0.8 0.6 1.6 0.6c0.4 0 0.7-0.1 1-0.2s0.6-0.4 0.8-0.7h3.4c-0.2 0.6-0.6 1.1-1 1.5s-0.9 0.8-1.4 1.1-1 0.5-1.6 0.6-1.1 0.2-1.7 0.2c-0.8 0-1.6-0.1-2.2-0.3-0.7-0.2-1.2-0.6-1.7-1-0.4-0.4-0.8-1-0.9-1.7-0.2-0.7-0.2-1.4-0.1-2.3 0.1-0.8 0.4-1.6 0.8-2.2 0.4-0.7 0.8-1.2 1.4-1.7s1.2-0.8 1.9-1 1.5-0.4 2.3-0.4c1.2 0 2.1 0.2 2.8 0.7 0.7 0.4 1.3 1.1 1.6 1.9 0.4 0.7 0.4 1.7 0.2 2.8zm20.4-9.5c-0.5-0.2-1.1-0.4-1.6-0.5-0.6-0.1-1.1-0.2-1.7-0.2-0.7 0-1.4 0.1-2.1 0.3s-1.4 0.5-2 0.8c-0.7 0.4-1.3 0.8-1.8 1.3s-1 1-1.4 1.6-0.7 1.2-1 1.8-0.5 1.3-0.6 2c-0.2 1.1-0.1 2.1 0.1 3s0.7 1.8 1.4 2.5c0.4 0.5 0.9 0.9 1.5 1.2 0.5 0.3 1.1 0.6 1.7 0.7 0.6 0.2 1.3 0.3 2 0.3 0.4 0 0.8 0 1.1-0.1 0.4-0.1 0.7-0.1 1.1-0.2s0.8-0.2 1.2-0.4l0.7-4.6c-0.3 0.3-0.7 0.6-1.1 0.8s-0.8 0.4-1.2 0.5-0.8 0.2-1.3 0.2c-0.6 0-1.1-0.1-1.6-0.3s-0.8-0.5-1.1-0.8c-0.3-0.4-0.5-0.8-0.6-1.3s-0.1-1 0-1.6 0.3-1.1 0.5-1.6c0.3-0.5 0.6-0.9 1-1.3s0.9-0.7 1.4-0.9 1.1-0.3 1.6-0.3c0.4 0 0.9 0.1 1.2 0.2 0.4 0.1 0.7 0.3 1.1 0.5 0.3 0.2 0.6 0.5 0.8 0.9l0.7-4.5zm5.1 4.3h-3.5l-1.6 10h3.5l1.6-10zm-0.8-5.8c-0.4 0-0.7 0.1-1 0.3s-0.6 0.4-0.8 0.7-0.4 0.6-0.4 1c-0.1 0.4 0 0.7 0.1 1s0.3 0.5 0.6 0.7 0.6 0.3 1 0.3 0.7-0.1 1-0.3 0.6-0.4 0.8-0.7 0.4-0.6 0.4-1c0.1-0.4 0-0.7-0.1-1s-0.3-0.5-0.6-0.7-0.6-0.3-1-0.3zm4.1 2.9l1.2 1.6 3.1-2.2 2.5 2.2 1.8-1.6-3.8-3.2-4.8 3.2zm1.4 6.5c0.1-0.3 0.3-0.6 0.5-0.9 0.2-0.2 0.5-0.4 0.8-0.5s0.6-0.2 1-0.2c0.3 0 0.6 0.1 0.9 0.2s0.5 0.3 0.6 0.5c0.2 0.2 0.2 0.5 0.3 0.8h-4.1v0.1zm7.1 1.6c0.2-1.1 0.1-2.1-0.2-2.9s-0.8-1.5-1.6-1.9c-0.7-0.4-1.7-0.7-2.8-0.7-0.8 0-1.6 0.1-2.3 0.4-0.7 0.2-1.4 0.6-1.9 1-0.6 0.5-1 1-1.4 1.7s-0.6 1.4-0.8 2.2c-0.1 0.9-0.1 1.6 0.1 2.3s0.5 1.2 0.9 1.7 1 0.8 1.7 1 1.4 0.3 2.2 0.3c0.6 0 1.1-0.1 1.7-0.2s1.1-0.3 1.6-0.6 1-0.6 1.4-1.1c0.4-0.4 0.7-0.9 1-1.5h-3.4c-0.2 0.3-0.5 0.6-0.8 0.7s-0.6 0.2-1 0.2c-0.7 0-1.3-0.2-1.6-0.6s-0.4-0.9-0.3-1.7h7.4l0.1-0.3zm6-5.2h-3.5l-1.6 10h3.5l0.8-5.2c0-0.3 0.1-0.6 0.2-0.9s0.2-0.5 0.4-0.7 0.4-0.4 0.6-0.5c0.3-0.1 0.6-0.2 0.9-0.2s0.6 0.1 0.8 0.2 0.3 0.3 0.4 0.5 0.1 0.4 0.1 0.6 0 0.5-0.1 0.7c0 0.2-0.1 0.4-0.1 0.6l-0.8 4.9h3.5l1-6.2c0.1-0.6 0.1-1.2 0.1-1.7-0.1-0.5-0.2-0.9-0.5-1.3-0.2-0.4-0.6-0.6-1-0.8s-1-0.3-1.7-0.3c-0.5 0-0.9 0-1.3 0.2-0.4 0.1-0.8 0.3-1.1 0.5-0.4 0.2-0.7 0.6-1 1l0.4-1.4zm16.4 0.3c-0.3-0.2-0.7-0.3-1.1-0.4s-0.8-0.1-1.2-0.1c-0.8 0-1.5 0.1-2.3 0.4-0.7 0.3-1.4 0.6-1.9 1.1-0.6 0.5-1.1 1.1-1.5 1.7-0.4 0.7-0.6 1.4-0.8 2.2-0.1 0.8-0.1 1.5 0.1 2.1s0.5 1.2 0.9 1.6c0.4 0.5 0.9 0.8 1.6 1.1 0.6 0.3 1.3 0.4 2 0.4 0.4 0 0.9 0 1.3-0.1s0.9-0.2 1.3-0.4l0.5-3c-0.2 0.1-0.4 0.3-0.6 0.4s-0.4 0.2-0.6 0.2c-0.2 0.1-0.4 0.1-0.6 0.1-0.5 0-0.9-0.1-1.2-0.3s-0.6-0.5-0.7-0.9c-0.2-0.4-0.2-0.8-0.1-1.3 0.1-0.3 0.2-0.7 0.3-1 0.2-0.3 0.4-0.6 0.6-0.8 0.3-0.2 0.5-0.4 0.9-0.5 0.3-0.1 0.6-0.2 1-0.2 0.3 0 0.7 0.1 0.9 0.2 0.3 0.1 0.5 0.3 0.8 0.5l0.4-3zm5.8-0.3h-3.5l-1.6 10h3.5l1.6-10zm-0.8-5.8c-0.4 0-0.7 0.1-1 0.3s-0.6 0.4-0.8 0.7-0.4 0.6-0.4 1c-0.1 0.4 0 0.7 0.1 1s0.3 0.5 0.6 0.7 0.6 0.3 1 0.3 0.7-0.1 1-0.3 0.6-0.4 0.8-0.7 0.4-0.6 0.4-1c0.1-0.4 0-0.7-0.1-1s-0.3-0.5-0.6-0.7-0.7-0.3-1-0.3zm7.9 8.6c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.4 1.1-0.5 0.6-0.9 0.8-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.5-1.1c0.2-0.3 0.5-0.6 0.9-0.8 0.3-0.2 0.7-0.3 1.2-0.3zm6.2-2.8h-3.5l-0.2 1c-0.2-0.3-0.5-0.5-0.8-0.7s-0.6-0.3-1-0.4-0.7-0.1-1.1-0.1c-0.7 0-1.4 0.2-2.1 0.4-0.7 0.3-1.2 0.7-1.8 1.2-0.5 0.5-0.9 1.1-1.3 1.7-0.3 0.6-0.6 1.3-0.7 2-0.1 0.6-0.1 1.1 0 1.7 0.1 0.5 0.2 1 0.5 1.5 0.2 0.4 0.5 0.8 0.9 1.2 0.4 0.3 0.8 0.6 1.3 0.8s1 0.3 1.6 0.3c0.4 0 0.8-0.1 1.2-0.2s0.8-0.3 1.1-0.5c0.4-0.2 0.7-0.5 0.9-0.8l-0.2 1.1h3.5l1.7-10.2zm10 0.3c-0.5-0.2-1-0.4-1.5-0.5s-1.1-0.1-1.7-0.1c-0.4 0-0.9 0-1.3 0.1s-0.9 0.2-1.3 0.4-0.8 0.4-1.1 0.7-0.6 0.6-0.8 1-0.4 0.8-0.5 1.3c-0.1 0.4-0.1 0.8 0 1.1s0.2 0.6 0.4 0.7c0.2 0.2 0.4 0.4 0.6 0.5s0.5 0.2 0.8 0.3 0.5 0.1 0.8 0.2 0.5 0.1 0.7 0.2 0.3 0.2 0.5 0.3c0.1 0.1 0.1 0.3 0.1 0.5s-0.1 0.3-0.3 0.4c-0.1 0.1-0.3 0.2-0.5 0.2s-0.3 0.1-0.5 0.1c-0.3 0-0.6-0.1-0.9-0.1-0.3-0.1-0.6-0.2-0.9-0.4s-0.6-0.3-0.8-0.5l-1.7 2.5c0.5 0.4 1.1 0.7 1.8 0.8 0.6 0.2 1.3 0.3 2 0.3 0.5 0 0.9 0 1.4-0.1s0.9-0.2 1.3-0.4 0.8-0.4 1.2-0.7 0.6-0.6 0.9-1c0.2-0.4 0.4-0.9 0.5-1.4s0.1-0.9 0-1.2-0.3-0.6-0.5-0.9c-0.2-0.2-0.5-0.4-0.8-0.6-0.3-0.1-0.7-0.3-1.1-0.3-0.1 0-0.3-0.1-0.4-0.1-0.2 0-0.3-0.1-0.5-0.1-0.2-0.1-0.3-0.1-0.4-0.2s-0.1-0.2-0.1-0.4c0-0.1 0.1-0.2 0.2-0.3s0.2-0.2 0.3-0.2c0.1-0.1 0.3-0.1 0.4-0.1h0.4c0.2 0 0.4 0 0.6 0.1 0.2 0 0.4 0.1 0.6 0.2l0.6 0.3 1.5-2.6zm14.9 9.7h3.5l2.6-16.1h-3.5l-1.1 7.1c-0.2-0.3-0.5-0.5-0.8-0.7s-0.6-0.3-1-0.4-0.7-0.1-1.1-0.1c-0.7 0-1.4 0.2-2.1 0.4-0.7 0.3-1.2 0.7-1.8 1.2-0.5 0.5-0.9 1.1-1.3 1.7-0.3 0.6-0.6 1.3-0.7 2-0.1 0.6-0.1 1.1 0 1.7 0.1 0.5 0.2 1 0.5 1.5 0.2 0.4 0.5 0.8 0.9 1.2 0.4 0.3 0.8 0.6 1.3 0.8s1 0.3 1.6 0.3c0.4 0 0.8-0.1 1.2-0.2s0.8-0.3 1.1-0.5c0.4-0.2 0.7-0.5 0.9-0.8l-0.2 0.9zm-1-7.2c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.5 1.1c-0.2 0.3-0.5 0.6-0.9 0.8s-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.5-1.1c0.2-0.3 0.5-0.6 0.9-0.8s0.8-0.3 1.3-0.3zm13.1 0c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.5 1.1c-0.2 0.3-0.5 0.6-0.9 0.8s-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.4-1.1 0.5-0.6 0.9-0.8c0.5-0.2 0.9-0.3 1.4-0.3zm6.1-2.8l-1.6 10h-3.5l0.2-1.1c-0.3 0.3-0.6 0.6-0.9 0.8-0.4 0.2-0.7 0.4-1.1 0.5s-0.8 0.2-1.2 0.2c-0.6 0-1.1-0.1-1.6-0.3s-0.9-0.4-1.3-0.8c-0.4-0.3-0.7-0.7-0.9-1.2-0.2-0.4-0.4-0.9-0.5-1.5-0.1-0.5-0.1-1.1 0-1.7 0.1-0.7 0.3-1.4 0.7-2 0.3-0.6 0.8-1.2 1.3-1.7s1.1-0.9 1.8-1.2 1.4-0.4 2.1-0.4c0.4 0 0.8 0 1.1 0.1 0.4 0.1 0.7 0.2 1 0.4s0.6 0.4 0.8 0.7l0.2-1h3.4v0.2zm19.3-3.8c-0.4-0.2-0.8-0.5-1.3-0.6-0.5-0.2-1-0.3-1.5-0.4s-1-0.1-1.5-0.1c-0.7 0-1.4 0.1-2.1 0.3s-1.2 0.6-1.8 1c-0.5 0.4-1 0.9-1.3 1.5s-0.6 1.3-0.7 2c-0.1 0.6-0.1 1 0 1.5 0.1 0.4 0.2 0.7 0.4 1s0.4 0.5 0.7 0.7 0.6 0.4 1 0.5 0.8 0.3 1.3 0.4c0.2 0 0.3 0.1 0.5 0.2s0.4 0.1 0.6 0.2 0.4 0.2 0.5 0.3c0.2 0.1 0.3 0.3 0.4 0.4 0.1 0.2 0.1 0.3 0.1 0.6s-0.1 0.5-0.3 0.7c-0.1 0.2-0.3 0.3-0.5 0.5l-0.6 0.3c-0.2 0.1-0.5 0.1-0.7 0.1-0.4 0-0.8-0.1-1.2-0.2s-0.7-0.3-1-0.5-0.6-0.5-0.9-0.8l-2.1 3.1c0.7 0.5 1.4 0.9 2.2 1.2s1.7 0.4 2.6 0.4c0.5 0 1 0 1.5-0.1s1-0.2 1.5-0.4 0.9-0.5 1.4-0.8c0.4-0.3 0.8-0.7 1.1-1.1s0.5-0.9 0.7-1.4 0.3-1 0.4-1.5c0.1-0.6 0.1-1.1 0-1.5s-0.3-0.8-0.6-1.1-0.6-0.6-1-0.8-0.9-0.4-1.3-0.5l-0.9-0.3c-0.2-0.1-0.3-0.1-0.5-0.2s-0.3-0.2-0.5-0.3-0.3-0.2-0.4-0.4-0.1-0.3-0.1-0.5 0.1-0.4 0.2-0.5c0.1-0.2 0.3-0.3 0.5-0.4s0.4-0.2 0.6-0.2 0.4-0.1 0.6-0.1c0.5 0 0.9 0.1 1.3 0.3s0.8 0.4 1.1 0.7l1.6-3.2zm6.5 6.6c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.5 1.1c-0.2 0.3-0.5 0.6-0.9 0.8s-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.4-1.1 0.5-0.6 0.9-0.8c0.5-0.2 0.9-0.3 1.4-0.3zm6.1-2.8h-3.5l-0.2 1c-0.2-0.3-0.5-0.5-0.8-0.7s-0.6-0.3-1-0.4-0.7-0.1-1.1-0.1c-0.7 0-1.4 0.2-2.1 0.4-0.7 0.3-1.2 0.7-1.8 1.2-0.5 0.5-0.9 1.1-1.3 1.7-0.3 0.6-0.6 1.3-0.7 2-0.1 0.6-0.1 1.1 0 1.7 0.1 0.5 0.2 1 0.5 1.5 0.2 0.4 0.5 0.8 0.9 1.2 0.4 0.3 0.8 0.6 1.3 0.8s1 0.3 1.6 0.3c0.4 0 0.8-0.1 1.2-0.2s0.8-0.3 1.1-0.5c0.4-0.2 0.7-0.5 0.9-0.8l-0.2 1.1h3.5l1.7-10.2zm11.4-4.4l-1.9-1.6-3.3 3.3 1.4 1.1 3.8-2.8zm-9.1 4.4l-1 6c-0.1 0.8-0.1 1.5 0.1 2.1s0.5 1 0.9 1.3 1 0.6 1.6 0.7 1.3 0.2 2.1 0.2 1.5-0.1 2.1-0.2c0.7-0.1 1.3-0.4 1.8-0.7s1-0.8 1.3-1.3c0.4-0.6 0.6-1.2 0.7-2.1l1-6h-3.5l-0.8 5.3c-0.1 0.4-0.2 0.8-0.3 1.1s-0.4 0.6-0.6 0.8c-0.3 0.2-0.7 0.3-1.1 0.3s-0.7-0.1-0.9-0.2-0.4-0.3-0.5-0.4c-0.1-0.2-0.1-0.4-0.2-0.7 0-0.3 0-0.6 0.1-0.9l0.8-5.3h-3.6zm18.8 10h3.5l2.6-16.1h-3.5l-1.1 7.1c-0.2-0.3-0.5-0.5-0.8-0.7s-0.6-0.3-1-0.4-0.7-0.1-1.1-0.1c-0.7 0-1.4 0.2-2.1 0.4-0.7 0.3-1.2 0.7-1.8 1.2-0.5 0.5-0.9 1.1-1.3 1.7-0.3 0.6-0.6 1.3-0.7 2-0.1 0.6-0.1 1.1 0 1.7 0.1 0.5 0.2 1 0.4 1.5 0.2 0.4 0.5 0.8 0.9 1.2 0.4 0.3 0.8 0.6 1.3 0.8s1 0.3 1.6 0.3c0.4 0 0.8-0.1 1.2-0.2s0.8-0.3 1.1-0.5c0.4-0.2 0.7-0.5 0.9-0.8l-0.1 0.9zm-1-7.2c0.5 0 0.9 0.1 1.2 0.3s0.5 0.5 0.6 0.8 0.2 0.7 0.1 1.1-0.2 0.8-0.5 1.1c-0.2 0.3-0.5 0.6-0.9 0.8s-0.8 0.3-1.3 0.3-0.9-0.1-1.2-0.3-0.5-0.5-0.6-0.8-0.2-0.7-0.1-1.1 0.2-0.8 0.5-1.1c0.2-0.3 0.5-0.6 0.9-0.8s0.8-0.3 1.3-0.3zm10.7 0.8c0.1-0.3 0.3-0.6 0.5-0.9 0.2-0.2 0.5-0.4 0.8-0.5s0.6-0.2 1-0.2c0.3 0 0.6 0.1 0.9 0.2s0.5 0.3 0.6 0.5c0.2 0.2 0.2 0.5 0.3 0.8h-4.1v0.1zm7.1 1.6l-0.1 0.4h-7.4c-0.1 0.7 0 1.3 0.3 1.7s0.8 0.6 1.6 0.6c0.4 0 0.7-0.1 1-0.2s0.6-0.4 0.8-0.7h3.4c-0.2 0.6-0.6 1.1-1 1.5s-0.8 0.8-1.4 1.1c-0.5 0.3-1 0.5-1.6 0.6s-1.1 0.2-1.7 0.2c-0.8 0-1.6-0.1-2.2-0.3-0.7-0.2-1.2-0.6-1.7-1-0.4-0.4-0.8-1-0.9-1.7-0.2-0.7-0.2-1.4-0.1-2.3 0.1-0.8 0.4-1.6 0.8-2.2 0.4-0.7 0.8-1.2 1.4-1.7s1.2-0.8 1.9-1 1.5-0.4 2.3-0.4c1.2 0 2.1 0.2 2.8 0.7 0.7 0.4 1.3 1.1 1.6 1.9 0.3 0.7 0.4 1.7 0.2 2.8z" />
+								</svg>
+							</a>
+						</div>
+					</div>
+					<a target="_blank" href="http://ufrj.br" title='acessar o site da UFRJ'><img class="ufrj100Anos" src="/img/ufrj100Anos.png"
+						 alt='Marca dos 100 anos da UFRJ - Link para o site da UFRJ'></a>
+					<div class="busca-e-navegacao">
+						<form action="/busca" method="get" name="form-busca-geral" id="form-busca-geral">
+							<input type="text" name="input-busca-geral" id="input-busca-geral" value="" placeholder="pesquisar">
+							<button type="submit" class="btn-busca">
+								<i class="fa fa-search"></i>
+							</button>
+						</form>
+						<i class="fa fa-bars icone-menu-mobile"></i>
+					</div>
+				</div>
+			</div>
+			<div class="espacador"></div>
+			<!--aqui acaba a barra superior-->
+			<nav id="main-nav">
+				<h2 id="main-nav-titulo" class="hidden">menu principal</h2>
+				<ul id="main-menu">
+					<li class="menu menu1">
+						<div class=" menu menu1 n1" id="menu-ccs">
+							<p>Sobre o CCS</p>
+							<div class="icon">
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</div>
+						<ul class="hidden">
+							<a href="/conteudos/historico" title='histórico do CCS'>
+								<li class="menu-item n2" id="menu-historico"><span class="n2">Histórico</span></li>
+							</a>
+							<a href="/ccs-50-anos" target="_blank" rel="noopener noreferrer" title='jubileu de ouro do CCS'>
+								<li class="menu-item n2" id="menu-jubileu"><span class="n2">Jubileu de Ouro</span></li>
+							</a>
+							<li>
+								<div class="menu menu2 n2" id="menu-decania">
+									<p>Decania</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/organograma" title='organograma do CCS'>
+										<li class="menu-item n3" id="organograma"><span>Organograma</span></li>
+									</a>
+									<li>
+										<div class="menu menu3 n3" id="menu-gestao">
+											<p>Gestão</p>
+											<div class="icon">
+												<i class="fa fa-caret-down"></i>
+											</div>
+										</div>
+										<ul class="menu">
+											<a href="/equipe-decania" title='Servidores lotados na Decania do CCS'>
+												<li class="menu-item n4" id="menu-equipe"><span>Equipe</span></li>
+											</a>
+											<a href="/conteudos/relatorio-gestao" title='Relatórios de Gestão da Decania do CCS'>
+												<li class="menu-item n4" id="rel-gestao"><span>Relatório de gestão</span></li>
+											</a>
+										</ul>
+									</li>
+									<a href="/conteudos/conselho-coordenacao" title='Conselho de Coordenação do CCS'>
+										<li class="menu-item n3" id="menu-conselho"><span>Conselho de Coordenação</span></li>
+									</a>
+									<!--<a href="/conteudos/camara-hospitais" title='Câmara dos Hospitais do CCS'><li class="menu-item n3" id="camara"><span>Câmara dos Hospitais</span></li></a>-->
+								</ul>
+							</li>
+							<a href="/unidades" title='Unidades do CCS'>
+								<li class="menu-item n2" id="menu-unidades"><span class="n2">Unidades</span></li>
+							</a>													
+							<li>
+								<div class="menu menu2 n2" id="menu-coordenacoes">
+									<p>Coordenações</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/biosseguranca" title='Coordenaçao de Biossegurança'>
+										<li class="menu-item n3" id="menu-biosseguranca"><span>Biossegurança</span></li>
+									</a>
+									<li>
+										<div class="menu menu3 n3" id="menu-cambe">
+											<p>CAMBE</p>
+											<div class="icon">
+												<i class="fa fa-caret-down"></i>
+											</div>
+										</div>
+										<ul class="menu">
+											<a href="/conteudos/cambe" title='Coordenação de Atividade com Modelos Biológicos Experimentais (CAMBE)'>
+												<li class="menu-item n4" id="menu-cambe"><span>CAMBE</span></li>
+											</a>
+											<a href="/conteudos/ceua" title='Comissão de Ética no Uso de Animais (CEUA)'>
+												<li class="menu-item n4" id="menu-ceua"><span>CEUA</span></li>
+											</a>
+											<a href="/conteudos/ncal" title=' Núcleo de Criação de Animais de Laboratório (NCAL)'>
+												<li class="menu-item n4" id="menu-ceua"><span>NCAL</span></li>
+											</a>
+										</ul>
+									</li>
+									<a href="/conteudos/extensao" title='Coordenação de Extensão'>
+										<li class="menu-item n3" id="menu-extensao-coordenacao"><span>Extensão</span></li>
+									</a>
+									<a href="/conteudos/acervos" title='Grupo de Trabalho de Acervos Culturais'>
+										<li class="menu-item n3" id="menu-acervos-culturais"><span>GT Acervos Culturais</span></li>
+									</a>
+									<a href="/conteudos/inovacao" title='Coordenação de Inovaçao'>
+										<li class="menu-item n3" id="menu-inovacao"><span>Inovação Tecnológica</span></li>
+									</a>
+									<a href="/conteudos/integracao-academica" title='Coordenação de Integração Acadêmica'>
+										<li class="menu-item n3" id="menu-integracao"><span>Integração Acadêmica</span></li>
+									</a>
+									<a href="/conteudos/pos-graduacao" title='Coordenação de Pós-Graduação'>
+										<li class="menu-item n3" id="menu-pos-graduacao-coordenacao"><span>Pós-Graduação</span></li>
+									</a>
+									<a href="/conteudos/projetos-especiais" title='Coordenação de Projetos Especiais'>
+										<li class="menu-item n3" id="menu-proj-esp"><span>Projetos Especiais</span></li>
+									</a>
+									<a href="/conteudos/qsmsrs" title='Coordenação de Qualidade, Segurança, Meio-Ambiente, Saúde e Responsabilidade Social'>
+										<li class="menu-item n3" id="menu-qualidade"><span>QSMSRS</span></li>
+									</a>
+									<a href="/conteudos/relacoesInternacionais" title='Coordenação de Relações Internacionais'>
+										<li class="menu-item n3" id="menu-ri"><span>Relações Internacionais</span></li>
+									</a>
+									<li>
+										<div class="menu menu3 n3" id="menu-residuos">
+											<p>Gerenciamento de Resíduos</p>
+											<div class="icon">
+												<i class="fa fa-caret-down"></i>
+											</div>
+										</div>
+										<ul class="menu">
+											<a href="/conteudos/reciclaccs" title='Projeto Recicla CCS'>
+												<li class="menu-item n4" id="menu-recicla-sobre"><span>Recicla CCS</span></li>
+											</a>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<a href="/conteudos/instrucoes-normativas" title='instruções normativas'>
+								<li class="menu-item n2" id="menu-normativas"><span>Instruções Normativas</span></li>
+							</a>							
+							<li>
+								<div class="menu menu2 n2" id="menu-mapas">
+									<p>Localização e Mapas</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/localizacao" title='localização do CCS'>
+										<li class="menu-item n3" id="localização"><span>Localização do CCS</span></li>
+									</a>
+									<a href="/conteudos/rotasDeEscape" title='rotas de escape do prédio do CCS'>
+										<li class="menu-item n3" id="rotas-de-escape"><span>Rotas de Escape</span></li>
+									</a>									
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="menu menu1">
+						<div class="menu menu1 n1" id="menu-ensino">
+							<p>Ensino</p>
+							<div class="icon">
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</div>
+						<ul class="hidden">
+							<li>
+								<div class="menu menu2 n2" id="menu-graduacao">
+									<p>Graduação</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/ceg" title='Conselho de Ensino de Graduação'>
+										<li class="menu-item n3"><span>CEG</span></li>
+									</a>
+									<a href="/conteudos/cursos" title='Cursos de Graduação'>
+										<li class="menu-item n3"><span>Cursos</span></li>
+									</a>
+								</ul>
+							</li>
+							<li>
+								<div class="menu menu2 n2" id="menu-pos-graduacao">
+									<p>Pós-Graduação</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/lato-sensu" title='latu sensu'>
+										<li class="menu-item n3"><span>Lato Sensu</span></li>
+									</a>
+									<a href="/conteudos/stricto-sensu" title='stricto sensu'>
+										<li class="menu-item n3"><span>Stricto Sensu</span></li>
+									</a>
+									<a href="/conteudos/pbv" title='Programa de Pós-Graduação em Biotecnologia Vegetal'>
+										<li class="menu-item n3"><span>PG em Biotecnologia Vegetal</span></li>
+									</a>
+									<a href="/conteudos/residencia" title='Residências Médicas'>
+										<li class="menu-item n3"><span>Residências</span></li>
+									</a>
+									<a href="/conteudos/cepg" title='Conselho de Ensino para Graduados'>
+										<li class="menu-item n3"><span>CEPG</span></li>
+									</a>
+								</ul>
+							</li>
+							<a href="/busca?input-busca-geral=oportunidades%26editais" title='oportunidades e editais'>
+								<li class="menu-item n2"><span>Oportunidades e Editais</span></li>
+							</a>
+						</ul>
+					</li>
+					<li class="menu menu1">
+						<div class="menu menu1 n1" id="menu-pesquisa">
+							<p>pesquisa</p>
+							<div class="icon">
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</div>
+						<ul class="hidden">
+							<a href="/conteudos/programas-pesquisa" title='programas de pesquisa'>
+								<li class="menu-item n2"><span>Programas de Pesquisa</span></li>
+							</a>
+							<a href="/conteudos/incts" title='INCT´s'>
+								<li class="menu-item n2"><span>INCTs, projetos FAPERJ, FINEP, outros</span></li>
+							</a>
+							<a href="/conteudos/pos-doutorandos" title='Pós-Doutorandos do CCS'>
+								<li class="menu-item n2"><span>Pós-Doutorandos</span></li>
+							</a>
+							<a href="/conteudos/laboratorios" title='laboratórios do CCS'>
+								<li class="menu-item n2"><span>Laboratórios</span></li>
+							</a>
+							<li>
+								<div class="menu menu2 n2" id="menu-unid-multi">
+									<p>Unidades Multiusuário</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/umaa" title='Unidade Multiusuário de Análises Ambientais (UMAA)'>
+										<li class="menu-item n3"><span>UMAA</span></li>
+									</a>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="menu menu1">
+						<div class="menu menu1 n1" id="menu-extensao">
+							<p>extensão</p>
+							<div class="icon">
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</div>
+						<ul class="hidden">
+							<a href="/conteudos/extensao" title='Coordenação de Extensão'>
+								<li class="menu-item n2" id="menu-extensao-coordenacao"><span>Coordenação de Extensão</span></li>
+							</a>
+							<a href="/conteudos/projetos-extensao" title='Projetos de Extensão'>
+								<li class="menu-item n2"><span>Projetos de Extensão</span></li>
+							</a>
+							<a href="/conteudos/programas-extensao" title='Programas de Extensão'>
+								<li class="menu-item n2"><span>Programas de Extensão</span></li>
+							</a>
+							<a href="http://sigproj.ufrj.br/" target="_blank" title='Acessar o SIGProj'>
+								<li class="menu-item n2"><span>SIGProj</span></li>
+							</a>
+						</ul>
+					</li>
+					<li class="menu menu1">
+						<div class="menu menu1 n1" id="menu-servicos">
+							<p>serviços</p>
+							<div class="icon">
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</div>
+						<ul class="hidden">
+							<li>
+								<div class="menu menu2 n2" id="menu-protocolo">
+									<p>Protocolo do CCS</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/revalidacao-diplomas" title='revalidação de diplomas'>
+										<li class="menu-item n3"><span>Revalidação de Diplomas</span></li>
+									</a>
+								</ul>
+							</li>
+
+							<li>
+								<div class="menu menu2 n2" id="menu-biosseguranca">
+									<p>Biossegurança</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="https://ccs-covid-informacao.herokuapp.com/" title='Reporte de casos de COVID-19' target="_blank" rel="noopener noreferrer">
+										<li class="menu-item n3"><span>Reporte de Casos de COVID-19</span></li>
+									</a>
+									<a href="/biosseguranca-servicos?servico=descarte" title='Descarte de resíduos químicos, radioativos, biológicos e vidros'>
+										<li class="menu-item n3"><span>Descarte de Resíduos</span></li>
+									</a>
+									<a href="/biosseguranca-servicos?servico=regularizacao" title='Regularização da manipulação de amostras biológicas e materiais radioativos'>
+										<li class="menu-item n3"><span>Manipulação de Materiais</span></li>
+									</a>
+									<a href="/conteudos/20190705projetoDoacaoReagentes" title='Doação de reagentes'>
+										<li class="menu-item n3"><span>Doação de reagentes</span></li>
+									</a>						
+								</ul>
+							</li>
+							<li>
+								<div class="menu menu2 n2" id="menu-recicla">
+									<p>Recicla CCS</p>
+									<div class="icon">
+										<i class="fa fa-caret-down"></i>
+									</div>
+								</div>
+								<ul class="menu">
+									<a href="/conteudos/reciclaccs" title='recicla CCS'>
+										<li class="menu-item n3" id="menu-sobre-o-projeto"><span>Sobre o Projeto</span></li>
+									</a>
+									<a href="/conteudos/reciclaccsGrandesVolumes" title='Retirada de grandes volumes'>
+										<li class="menu-item n3" id="menu-retirada-grandes-volumes"><span>Retirada de grandes volumes</span></li>
+									</a>
+									<a href="/conteudos/reciclaccsColetaLaboratorios" title='Coleta seletiva nos laboratórios'>
+										<li class="menu-item n3" id="menu-coleta-seletiva-laboratorios"><span>Coleta seletiva nos laboratórios</span></li>
+									</a>
+								</ul>
+							</li>
+						</ul>
+					</li>
+					<li class="menu menu1">
+						<div class="menu menu1 n1" id="menu-sistemas">
+							<p>Links Úteis</p>
+							<div class="icon">
+								<i class="fa fa-caret-down"></i>
+							</div>
+						</div>
+						<ul class="hidden">
+							<a target="_blank" href="http://www.ufrj.br/" title='website da UFRJ'>
+								<li class="menu-item n2"><span>UFRJ</span></li>
+							</a>
+							<a target="_blank" href="http://www.sibi.ufrj.br/" title='Sistema de Bibliotecas e Informação da UFRJ'>
+								<li class="menu-item n2"><span>SiBi</span></li>
+							</a>
+							<a target="_blank" href="https://intranet.ufrj.br/" title='Sistema Integrado de Gestão Acadêmcia da UFRJ (SIGA)'>
+								<li class="menu-item n2"><span>INTRANET UFRJ/SIGA/SIRHU</span></li>
+							</a>
+							<a target="_blank" href="http://lattes.cnpq.br/">
+								<li class="menu-item n2"><span>Plataforma Lattes</span></li>
+							</a>
+							<a href="/conteudos/agencias-fomento" title='Plataforma Lattes'>
+								<li class="menu-item n2"><span>Agências de fomento</span></li>
+							</a>
+							<a target="_blank" href="http://sigproj.ufrj.br//" title='SIGProj'>
+								<li class="menu-item n2"><span>SIGProj</span></li>
+							</a>
+							<a target="_blank" href="http://ctnbio.mcti.gov.br/" title='CTNBio'>
+								<li class="menu-item n2"><span>CTNBio</span></li>
+							</a>
+							<a target="_blank" href="http://plataformabrasil.saude.gov.br/" title='Plataforma Brasil'>
+								<li class="menu-item n2"><span>Plataforma Brasil</span></li>
+							</a>
+						</ul>
+					</li>
+				</ul>
+				<!--fim do menu-->
+			</nav>
+		</header>
+		<i id="fechar-mapa" class="fa fa-times fechar-mapa hidden opacidade-zero"></i>
+

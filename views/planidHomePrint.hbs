@@ -1,0 +1,14 @@
+{{> header}}
+{{> topBarDesktop}}
+  <div class='planid-impressao deslocar'>
+    <input type='hidden' name='_csrf' value='{{csrfToken}}' >
+    <div class='print__container planids-imprimir planids-homologar'></div>
+  </div>    
+
+  <link rel="stylesheet" href="/dist/styles/planidImprimir.min.css">    
+  <link rel="stylesheet" href="/dist/styles/planidHomePrint.min.css">    
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" defer></script>
+  <script src="/dist/scripts/utilidadesSistemas.min.js" defer></script>
+  <script src="/dist/scripts/planidHomeUtils.min.js" defer></script>
+  <script src="/dist/scripts/planidHomePrint.min.js" defer></script>
+{{> footer}}

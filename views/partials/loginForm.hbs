@@ -1,0 +1,32 @@
+<div class="login-form-desktop login-form">
+	{{#if usuario}}
+	{{> atalhosUsuario}}
+	{{else}}
+	<div class="login-header visitante">
+		<p>log-in</p><i class="fa fa-user"></i>
+		<i class="fa fa-caret-down seta login-seta"></i>
+	</div>
+	<form method="post" class=" formulario form-login-topbar" id="form-login-topbar" action="/login">
+		<div>
+			<label for="identificacao-topbar">				
+				<p>Identificação:</p>			
+				<i class='fa fa-info'></i>
+				<span class="dica">Servidores: SIAPE, estudantes: DRE, demais usuários: CPF</span>	
+			</label>
+			<input type="text" name="identificacao" id="identificacao-topbar" required>
+		</div>
+		<div>
+			<label for="senha-topbar">
+				<p>senha:</p>
+			</label>
+			<input type="password" name="senha" id="senha-topbar" required>
+			<a href="/users/cadastro" class="mensagens-login" title='novos usuários'>novos usuários | </a>
+			<a href="/alterarsenha" class="mensagens-login" title='alterar senha'>esqueci minha senha</a>
+		</div>
+		<input type='hidden' name='_csrf' value={{csrfToken}} >
+		<div>
+			<button type="submit" class="mensagens-login">Entrar</button>
+		</div>
+	</form>
+	{{/if}}
+</div>

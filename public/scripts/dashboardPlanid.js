@@ -117,7 +117,7 @@ const submeterPlanid = e => {
     elements = getFormElements(e, "array");
   } else {
     elements = getFormElements(null, 'array', document.getElementById(`planid-formulario`).elements);
-  }  
+  }
   if (Array.isArray(elements.comentariosGerais)) {
     elements.comentariosGerais = elements.comentariosGerais[0];
   }  
@@ -128,6 +128,7 @@ const submeterPlanid = e => {
 
     const planidOffline = {
       idPlanid,
+      _csrf: dashboard.csrfToken,
       finalizado: planid.clicouFinalizar,
       dados: JSON.stringify(elements)
     };
@@ -171,13 +172,13 @@ const submeterPlanid = e => {
         } else if (e.target.classList.contains("btn-acao-confirmar")) {
           operacaoDB();
           variaveisGlobais.ajax(
-            "/planids/planid/salvar",
+            "/users/planid/salvar",
             "POST",
             {
               idPlanid,
+              _csrf: dashboard.csrfToken,
               finalizado: planid.clicouFinalizar,
-              dados: JSON.stringify(elements),
-              user: JSON.stringify(dashboard.user._id),
+              dados: JSON.stringify(elements)
             },
             cbEnviar,
             cbErroSalvamento
@@ -199,9 +200,9 @@ const submeterPlanid = e => {
       operacaoDB();
     }
     variaveisGlobais.ajax(
-      "/planids/planid/salvar",
+      "/users/planid/salvar",
       "POST",
-      { idPlanid, finalizado: planid.clicouFinalizar, dados: JSON.stringify(elements), user: JSON.stringify(dashboard.user._id) },
+      { idPlanid, _csrf: dashboard.csrfToken, finalizado: planid.clicouFinalizar, dados: JSON.stringify(elements) },
       cbEditar,
       cbErroSalvamento,
     );
@@ -220,18 +221,25 @@ const exibirPlanidAposConexao = () => {
 
 const planidsClickHandler = e => {  
   if (!window.navigator.onLine) {
-    variaveisGlobais.exibirMensagem(`<h3>Sem acesso à internet. Informaremos quando a conexão for restabelecida.</h3>`);
+    variaveisGlobais.exibirMensagem(`<h3>Sem acesso à internet. Avisaremos quando a conexão for restabelecida.</h3>`);
     return window.addEventListener('online', exibirPlanidAposConexao);
   }
   let semestreDoPlanid;
+
+
+
+
+
   if (e.target.dataset.id) {
     const planidSelecionado = dashboard.user.planids.find(planid => planid._id === e.target.dataset.id);
     semestreDoPlanid = planidSelecionado.semestre;
     const prazoEncerrado = `<h3>Prazo de preenchimento do planid ${semestreDoPlanid} encerrado.</h3>`;
+
     if (planidSelecionado.enviado && semestreDoPlanid < semestre) {
       return variaveisGlobais.exibirMensagem(prazoEncerrado)
     }
-    if (habilitarPreenchimentoPlanid) {      
+
+    if (habilitarPreenchimentoPlanid) {   
       selecionarDadosVersao(semestreDoPlanid);
       setTimeout(() => {
         editarPlanid(e.target.dataset.id);
@@ -246,7 +254,8 @@ const planidsClickHandler = e => {
     }
     const thisPlanid = dashboard.user.planids.find(planid => planid._id === e.target.dataset.planid);
     semestreDoPlanid = thisPlanid.semestre;
-    if ((habilitarPreenchimentoPlanid && semestreDoPlanid >= semestre) || !thisPlanid.enviado) {
+    // TODO: estudar manter as alterações abaixo: para permitir comentárioe mensagens, basta que o preenchimento esteja habilitado, mesmo que o planid já tenha sido enviado.
+    if ((habilitarPreenchimentoPlanid /* && semestreDoPlanid >= semestre */) /* || !thisPlanid.enviado */) {
       for (let i = 0; i < dashboard.user.planids.length; i++) {
         if (dashboard.user.planids[i]._id.toString() === e.target.dataset.planid) {
           const plSelecionado = dashboard.user.planids[i];
@@ -255,19 +264,18 @@ const planidsClickHandler = e => {
         }
       }
     } else {
-      return variaveisGlobais.exibirMensagem(`<h3>O prazo para edição dos comentários gerais deste planid já está encerrado.</h3>`);
+      return variaveisGlobais.exibirMensagem(`<h3>O prazo para edição dos comentários gerais deste planid já está encerrado</h3>`);
     }
   } else if (e.target.dataset.imprimir) {
     imprimirPlanid(e.target.dataset.imprimir, planid.unidadePreenchimentoPlanid, e.target.dataset.semestre, true);
   } else if (e.target.classList.contains('botao-novo-planid')) {
     let message;
     if (prazoNovoPlanid && !todosPlanidsEnviados()) {
-      message = "<h3>Não é possível iniciar o preenchimento de um novo planid sem o envio de todos os planos anteriores.</h3>";
+      message = "<h3>Não é possível iniciar o preenchimento de um novo planid sem o envio de todos os planos anteriores</h3>";
     } else if (!prazoNovoPlanid) {
-     message = "<h3>O prazo para o preenchimento de um novo planid está encerrado.</h3>"
+     message = "<h3>O prazo para o preenchimento de um novo planid está encerrado</h3>";
     } else {
-      message = "<h3>Todos os seus planids foram enviados! Aguarde a divulgação do período para preenchimento de um novo planid.</h3>"
-      
+      message = "<h3>Todos os seus planids foram enviados! Aguarde a divulgação do período para preenchimento de um novo planid.</h3>";      
     }
     planid.habilitarNovoPlanid ? rotinasNovoPlanid(semestre) : variaveisGlobais.exibirMensagem(message);
   }
@@ -426,7 +434,7 @@ const navegacaoPlanid = (e, validacao) => {
       planid.pagina++;
     } else if (acao) {      
       planid.clicouFinalizar = true;
-      // TODO:
+      // TODO: habilitar o condicional caso a gestão decida implementar a homologação de planids
       // if (!planid.emEdicao.homologado) {
         document.getElementById(`submit-planid`).click();
       // }
@@ -437,7 +445,7 @@ const navegacaoPlanid = (e, validacao) => {
     document.querySelector(`.step-section-${planid.pagina}`).classList.add("selected");
 
     // definindo os textos do div de controle
-    // TODO: reabilitar o condicional se a gestão determinarf o bloqueio para edição após o envio
+    // TODO: reabilitar o condicional se a gestão determinar o bloqueio para edição após o envio
     if (planid.pagina === planid.totalPaginas /* && planid.emEdicao.enviado */) {
       avancarInativo = "inativo";
       textoBotaoAvancar = "avançar";
@@ -565,7 +573,10 @@ const salvarComentariosGerais = e => {
         variaveisGlobais.ajax(
           "/planids/editar-planid",
           "POST",
-          { data: JSON.stringify({_id: e.target.dataset.id, comentariosGerais: e.target.elements.comentariosGerais.value}) },
+          { 
+            _csrf: dashboard.csrfToken,              
+            data: JSON.stringify({_id: e.target.dataset.id, comentariosGerais: e.target.elements.comentariosGerais.value}),
+          },
           sucesso,
           cbErro
         );
@@ -771,7 +782,7 @@ const novoPlanid = tipo => {
   } else if (tipo === 'edicao' || !planid.ultimoRegistrado) {
     document
       .querySelector(`body`)
-      .insertAdjacentHTML("beforeend", relatorioBase(dashboard.user._id));
+      .insertAdjacentHTML("beforeend", relatorioBase(dashboard.csrfToken, dashboard.user._id));
     document.querySelector(`.overlay-novo-planid`).insertAdjacentHTML("beforeend", divNavegacaoPlanid);
     variaveisGlobais.controlarVisibilidade("exibir", ".overlay-novo-planid");
     document.querySelectorAll(`body`)[0].classList.add("fixo");
@@ -891,19 +902,17 @@ const gerarListaPlanids = () => {
         icon = `fa-check`;
         title = "planid enviado";
       }
+      
       const comentariosGerais = isUltimoRegistrado
         ? `
           <i class='fa fa-commenting-o icone-exibir-comentarios icone-acoes-planid' data-planid='${thisPlanid._id}' title='comentários gerais sobre o planid ${thisPlanid.semestre}'></i>
           <a href='/acompanhar-eventos/planid/${thisPlanid.autor}/${thisPlanid._id}' target='_blank' rel='noopener' rel='noreferrer'><i class='fa fa-envelope icone-exibir-mensagens icone-acoes-planid' title='eventos e mensagens do planid ${thisPlanid.semestre}'></i></a>
         `
         : "";
-      
       html += `
         <div class='objetos-registrados__objeto-registrado'>
           <i title="${title}" class='fa fa-fw ${icon} objetos-registrados__icon' ${!thisPlanid.enviado ? `data-id="${thisPlanid._id}"` : ''}></i>
-          <span class='${isUltimoRegistrado ? "objetos-registrados__link" : ""}' data-id='${thisPlanid._id}' title='${
-        isUltimoRegistrado ? "editar o" : ""
-      } planid ${thisPlanid.semestre}'>Planid ${thisPlanid.semestre}</span>
+          <span class='${isUltimoRegistrado ? "objetos-registrados__link" : ""}' data-id='${isUltimoRegistrado ? thisPlanid._id : ''}' title='${isUltimoRegistrado ? "editar o" : ""} planid ${thisPlanid.semestre}'>Planid ${thisPlanid.semestre}</span>
           <div class='icone-acoes-planid-div'>
             ${comentariosGerais}
             <i class='fa fa-print icone-imprimir-planid icone-acoes-planid' data-imprimir='${
@@ -913,11 +922,13 @@ const gerarListaPlanids = () => {
         </div>
       `;
     }
+
     html += `</div>
       ${adicionarObjBtn("adicionar plano", "botao-novo-planid")}
       </div>
     `;
   }
+  
   const noPlanids = `
     <h3 class='centralizado sem-relatorios text-shadow-inset'>
       Não há registros de Planos. Para iniciar o preenchimento, clique em "adicionar plano"
@@ -1017,5 +1028,6 @@ const rotinasPlanid = () => {
   inicializarVariaveis();
   montarAreaPlanid();
 };
+
 
 

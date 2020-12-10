@@ -1,5 +1,6 @@
 "use strict"
 
+const _csrf = document.querySelector(`.csrf-token`).value;
 const consolidaPlanid = {
   semestre: '',
 };
@@ -58,7 +59,7 @@ const estatisticasResumoCentroCSV = async () => {
     query: JSON.stringify([{ categoria: 'docente' }]),
     populate: JSON.stringify({ path: 'planids', options: { select: 'enviado semestre' } }),
   }
-  const users = await variaveisGlobais.ajax('/users/recuperarContatos', 'GET', { ...query }, () => variaveisGlobais.controlarVisibilidade('ocultar', '#mensagens-genericas'));
+  const users = await variaveisGlobais.ajax('/users/recuperarContatos', 'GET', { _csrf, ...query }, () => variaveisGlobais.controlarVisibilidade('ocultar', '#mensagens-genericas'));
   const consolidado = tratarDadosConsolidacaoPlanid(users);
 
   const header = [
@@ -140,7 +141,7 @@ const selecionarSemestreHandler = async e => {
     query: JSON.stringify({semestre}),
     countOnly: true,   
   }
-  const planids = await variaveisGlobais.ajax('/planids/recuperar-planid', 'GET', { ...query }, () => variaveisGlobais.controlarVisibilidade('ocultar', '#mensagens-genericas'));
+  const planids = await variaveisGlobais.ajax('/planids/recuperar-planid-homologacao', 'GET', { _csrf, ...query }, () => variaveisGlobais.controlarVisibilidade('ocultar', '#mensagens-genericas'));
   if (planids.length) {
     consolidaPlanid.semestre = semestre;
     csvDOM();

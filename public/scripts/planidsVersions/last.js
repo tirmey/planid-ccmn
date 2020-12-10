@@ -211,12 +211,13 @@ let cargasHorariasParciais = {
 ////////////// PLANID //////////////
 ////////////////////////////////////
 
-const relatorioBase = (userId, homologado) => {
+const relatorioBase = (csrfToken, userId, homologado) => {
   let planidSemestre = "";
   if (planid.emEdicao) {
     planidSemestre = planid.emEdicao.semestre;
   } else {   
     if (!planid.ultimoRegistrado) {
+      console.log('semestre é o caso!!: >>>>>> ', semestre);
       planidSemestre = semestre;
     } else if (planid.ultimoRegistrado.semestre !== semestre || planid.ultimoRegistrado.semestre !== proximoSemestre) {
       // o docente pulou um planid!
@@ -239,6 +240,7 @@ const relatorioBase = (userId, homologado) => {
           <h2 class='header planid-formulario-header'> ${homologado ? "" : "Preencher"} planid ${planidSemestre} </h2>
         </div>
         <form class="formulario ${homologado}" id='planid-formulario' action="/planid/salvar-formulario" novalidate>
+          <input type='hidden' name='_csrf' value='${csrfToken}' >
           <input type='hidden' name='autor' value='${userId}' >
           <input type='hidden' name='comentariosGerais' value='' >
           <div>

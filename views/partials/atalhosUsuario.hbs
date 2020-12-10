@@ -1,0 +1,47 @@
+<div class="login-header usuario">
+    <div class='usuario-boas-vindas-div'>
+        {{#if foto}}        
+            <img src='https://res.cloudinary.com/webdev-ccs/image/upload/{{foto}}.png' alt='{{usuario}}' class='foto-usuario-login'>
+        {{/if}}
+        <h2 class="mensagens-login usuario">Boas vindas, {{{usuario}}}!</h2>
+        {{#if numMensagens}}
+            <span class='numero-mensagens-usuario' title='você tem {{numMensagens}} mensagem(ns) não lida(s)'>{{numMensagens}}</span> 
+        {{/if}}
+
+    </div>
+    <i class="fa fa-caret-down seta login-seta"></i>
+</div>
+<div class="form-login-topbar">
+    <ul>    
+        {{#if permissoes.homologaPlanid}}            
+            <span>Planid CCS (Gestão Unidade)</span>
+            <hr>            
+            <li>
+                <a href="/planids/homologar" title='gestão dos planids'>Gerenciar Planids</a>
+            </li>         
+        {{/if}}
+        {{#if permissoes.consolidaPlanid}}            
+            <span>Planid CCS (consulta Decania)</span>
+            <hr>            
+            <li>
+                <a href="/planids/consolidar" title='estatísticas dos planids'>Status de preenchimento</a>
+            </li>          
+        {{/if}}
+        <span>Acesso</span>        
+        <hr>
+        <li>
+            <a href="/users/dashboard" title='Perfil do usuário'>Meu perfil</a>
+        </li>        
+        {{#if sistemas.planids}}            
+            <li>
+                <a href="/users/dashboard?dashboard-system=MEUS PLANIDS" title='Gerenciamento de planids'>Meus planids</a>
+            </li>
+        {{/if}}        
+        <li>
+            <a href="/alterarsenha" title='alterar senha'>Alterar senha</a>
+        </li>
+        <li>
+            <a href="/signout" title='sair'>Sair</a>
+        </li>
+    </ul>
+</div>

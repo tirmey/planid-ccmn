@@ -1,6 +1,6 @@
 'use strict'
 
-const arrayUnidades = ['Centro Nacional de Biologia Estrutural e Bioimagem (CENABIO)', 'Escola de Educação Física e Desportos (EEFD)', 'Escola de Enfermagem Anna Nery (EEAN)', 'Faculdade de Farmácia (FF)', 'Faculdade de Medicina (FM)', 'Faculdade de Odontologia (FO)', 'Hospital Universitário Clementino Fraga Filho (HUCFF)', 'Instituto NUTES de Educação em Ciências e Saúde', 'Instituto de Atenção Primária de Saúde São Francisco de Assis (HESFA)', 'Instituto de Biofísica Carlos Chagas Filho (IBCCF)', 'Instituto de Biologia (IB)', 'Instituto de Bioquímica Médica (IBqM)', 'Instituto de Ciências Biomédicas (ICB)', 'Instituto de Doenças do Tórax (IDT)', 'Instituto de Estudos em Saúde Coletiva (IESC)', 'Instituto de Ginecologia (IG)', 'Instituto de Microbiologia Paulo de Góes (IMPG)', 'Instituto de Neurologia Deolindo Couto (INDC)', 'Instituto de Nutrição Josué de Castro (INJC)', 'Instituto de Pesquisas de Produtos Naturais (IPPN)', 'Instituto de Psiquiatria (IPUB)', 'Instituto de Puericultura e Pediatria Martagão Gesteira (IPPMG)', 'Instituto do Coração Edson Abdala Saad (ICES)', 'Maternidade Escola (ME)', 'Nucleo de Bioética e Ética Aplicada (NUBEA)', 'Núcleo de Pesquisas Ecológicas de Macaé (NUPEM)', 'Decania do CCS'];
+const arrayUnidades = ['Instituto de Física (IF)', 'Instituto de Geociências (Igeo)', 'Instituto de Matemática (IM)', 'Instituto de Química (IQ)', 'Observatório do Valongo (OV)', 'Instituto Tércio Pacitti de Aplicações e Pesquisas Computacionais (NCE)', 'Decania do CCMN'];
 
 var eventosDOM = eventos => {  
   var eventosDOM = "";    
@@ -37,7 +37,7 @@ const getFormElements = (submitEvent, returnedType, extractedElements) => {
         } else {
           reqBody[elements[i].name] = elements[i].value;
         }
-      } else if (returnedType === 'array') {
+      } else if (returnedType === 'array' && elements[i].name !== '_csrf') {
         if (reqBody[elements[i].name]) {
           reqBody[elements[i].name].push(elements[i].value);
         } else {
@@ -149,7 +149,7 @@ const swapClass = (element, class1, class2) => {
 
 //InserirInput
 
-//função que insere inputs dinâmicos no padrão dos sistemas do site do CCS
+//função que insere inputs dinâmicos no padrão dos sistemas do portal do CCS
 //nomeInput - String - o atributo "name" de todos os inputs criados por uma mesma chamada da função
 //classes: String - As classes atribuídas a cada box, separadas por um espaço simples. O nome do input é adicionado automaticamente às classes. Não deve, portanto, ser incluído na string classes. evitar nomes genéricos
 //campo dinâmico é uma função contendo o input (input, select, checkbox, radio) a ser criado e deve conter, em sua estrutura, o parâmetro dinâmico "num", que individualiza cada input.
